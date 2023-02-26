@@ -3,22 +3,33 @@ const pkmCount = 151;
 let pokedex = {}; //contains each pokemon entry
 const pdList = document.getElementById('pd-container'); //append each pokemon here
 
+// populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
     for(let i = 1; i<= 10; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
+        pkm.innerText = `${i} ${pokedex[i]['name']}`
+        let pImg = document
+        //document.getElementById('pkm-img-container').append(pokedex[i]['img'])
+        pkm.addEventListener('click', updatePokemon);
         pdList.append(pkm);
     }
     console.log(pokedex);
 });
+
+function updatePokemon(){
+    document.getElementById('pkm-img').src = pokedex[this.id]['img'];
+    document.getElementById('pkm-title').src = pokedex[this.id]['name'];
+
+}
 
 async function getPokemon(num){
     let url = "https://pokeapi.co/api/v2/pokemon/" + num.toString();
     let response = await fetch(url)
     let pkm = await response.json();
 
-    //console.log(pkm);
+    console.log(pkm);
     let pkmName = pkm.name; //return string
     let pkmTypes = pkm.types; //return array
     let pkmImg = pkm.sprites.other['official-artwork']['front_default']; //return img

@@ -8,11 +8,15 @@ body{
     border-radius: 12px;
 }
 
-#pkm-img-container{
+#pkm-img{
     border: solid 1px red;
 }
 
 #pokedex-list{
     background-color: white;
     border-radius: 12px;
+}
+
+#pd-container{
+
 }
