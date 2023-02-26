@@ -1,0 +1,18 @@
+body{
+    background-color: #EBEFF2;
+    display: flex;
+}
+
+#pokemon-display{
+    background-color: white;
+    border-radius: 12px;
+}
+
+#pkm-img-container{
+    border: solid 1px red;
+}
+
+#pokedex-list{
+    background-color: white;
+    border-radius: 12px;
+}
