@@ -4,6 +4,7 @@ let pokedex = {}; //contains each pokemon entry
 const pdList = document.getElementById('pd-container'); //append each pokemon here
 
 const pkmDisplay = document.getElementById('pokemon-display'); 
+let pkmHolder = 1;
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
@@ -12,36 +13,46 @@ document.addEventListener('DOMContentLoaded', async () =>{
         let pkm = document.createElement('div');
         pkm.id = i; 
         pkm.innerText = `${i} ${pokedex[i]['name']}`
-        let pImg = document
-        //document.getElementById('pkm-img-container').append(pokedex[i]['img'])
-        pkm.addEventListener('click', updatePokemon);
-        //document.getElementById('expand').addEventListener('click', expandCard);
+
+        pkm.addEventListener('click', updatePokemon); 
+
         pdList.append(pkm);
     }
+    document.getElementById('expand').addEventListener('click', expandCard); //add event listener to expand button
     console.log(pokedex);
 });
 
 function updatePokemon(){
+    //console.log(this.id)
+    pkmHolder = this.id;
     document.getElementById('pkm-img').src = pokedex[this.id]['img'];
-    document.getElementById('pkm-title').innerText = this.id + pokedex[this.id].name;
+    document.getElementById('pkm-title').innerText = "#" +  this.id + " " + (pokedex[this.id].name).toUpperCase();
+}
+
+
+function expandCard(){
+    let expander = document.getElementById('expand');
+    expander.classList.add('expanded');
+
+    //let info = document.getElementById('pkm-info');
+    //let infoText = pokedex[pkmHolder]['desc']; // FIX THIS
+    //info.append(infoText);
+
+    let description = document.getElementById('pkm-description');
+    description.append(pokedex[pkmHolder]['desc']);
 }
 
 /*
-let description = document.getElementById('pkm-description');
-function expandCard(){
+let description = document.createElement('div');
+function expandCard(num){
     // enter expanded view
-    pkmDisplay.classList.add('expanded');
-    description.innerText = pokedex[this.id]['desc'];
-    //description.innerText = 'hello';
-    //let basic = document.createElement('div');
-    
-    //let description = document.createElement('div').src = pokedex[this.id]['desc'];
+    pkmDisplay.classList.add('expanded'); //add expanded style, make card bigger
 
-    //description.innerHTML = pokedex[this.id]['name'];
-    //console.log(pokedex[this.id]['desc']);
-    //pkmDisplay.append(basic);
+    console.log('you clicked on the ' + num)
+    // description
+    description.innerText = pokedex[this.id]['name'];
     pkmDisplay.append(description);
-} */
+}  */
 
 async function getPokemon(num){
     let url = "https://pokeapi.co/api/v2/pokemon/" + num.toString();
@@ -102,5 +113,3 @@ async function getPokemon(num){
         "sprites" : pkmSprites
     }
 }
-
-
