@@ -1,14 +1,9 @@
 const pkmCount = 151;
 
-// object containing all pokemon and their info
-
-let pokedex = {}; //name, img, types, description, species, height, weight 
-
+let pokedex = {}; //contains each pokemon entry
 const pdList = document.getElementById('pd-container'); //append each pokemon here
 
 document.addEventListener('DOMContentLoaded', async () =>{
-    // ...create pokedex
-    
     for(let i = 1; i<= 10; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
