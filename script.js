@@ -8,18 +8,22 @@ const pdList = document.getElementById('pd-container'); //append each pokemon he
 
 document.addEventListener('DOMContentLoaded', async () =>{
     // ...create pokedex
-    await getPokemon(1);
+    
+    for(let i = 1; i<= 10; i++){
+        await getPokemon(i);
+        let pkm = document.createElement('div');
+        pkm.id = i; 
+        pdList.append(pkm);
+    }
     console.log(pokedex);
-
-})
+});
 
 async function getPokemon(num){
     let url = "https://pokeapi.co/api/v2/pokemon/" + num.toString();
     let response = await fetch(url)
     let pkm = await response.json();
 
-    console.log(pkm);
-
+    //console.log(pkm);
     let pkmName = pkm.name; //return string
     let pkmTypes = pkm.types; //return array
     let pkmImg = pkm.sprites.other['official-artwork']['front_default']; //return img
@@ -33,7 +37,8 @@ async function getPokemon(num){
 
     response = await fetch(pkm.species.url);
     let pkmSpc = await response.json(); //pokemon species 
-    console.log(pkmSpc);
+
+    //console.log(pkmSpc);
     let pkmDesc = pkmSpc['flavor_text_entries'][0]['flavor_text'];
     let pkmTx = pkmSpc.genera[7];
     let pkmHap = pkmSpc['base_happiness'];
