@@ -3,6 +3,8 @@ const pkmCount = 151;
 let pokedex = {}; //contains each pokemon entry
 const pdList = document.getElementById('pd-container'); //append each pokemon here
 
+const pkmDisplay = document.getElementById('pokemon-display'); 
+
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
     for(let i = 1; i<= 10; i++){
@@ -13,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
         let pImg = document
         //document.getElementById('pkm-img-container').append(pokedex[i]['img'])
         pkm.addEventListener('click', updatePokemon);
+        //document.getElementById('expand').addEventListener('click', expandCard);
         pdList.append(pkm);
     }
     console.log(pokedex);
@@ -20,9 +23,25 @@ document.addEventListener('DOMContentLoaded', async () =>{
 
 function updatePokemon(){
     document.getElementById('pkm-img').src = pokedex[this.id]['img'];
-    document.getElementById('pkm-title').src = pokedex[this.id]['name'];
-
+    document.getElementById('pkm-title').innerText = this.id + pokedex[this.id].name;
 }
+
+/*
+let description = document.getElementById('pkm-description');
+function expandCard(){
+    // enter expanded view
+    pkmDisplay.classList.add('expanded');
+    description.innerText = pokedex[this.id]['desc'];
+    //description.innerText = 'hello';
+    //let basic = document.createElement('div');
+    
+    //let description = document.createElement('div').src = pokedex[this.id]['desc'];
+
+    //description.innerHTML = pokedex[this.id]['name'];
+    //console.log(pokedex[this.id]['desc']);
+    //pkmDisplay.append(basic);
+    pkmDisplay.append(description);
+} */
 
 async function getPokemon(num){
     let url = "https://pokeapi.co/api/v2/pokemon/" + num.toString();
@@ -83,3 +102,5 @@ async function getPokemon(num){
         "sprites" : pkmSprites
     }
 }
+
+

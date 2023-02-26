@@ -6,6 +6,16 @@ body{
 #pokemon-display{
     background-color: white;
     border-radius: 12px;
+    margin: 30px;
+}
+
+#expand{
+    padding: 8px;
+    background-color: lightcoral;
+}
+.expanded{
+    background-color: green;
+    width: 800px;
 }
 
 #pkm-img{
@@ -15,8 +25,10 @@ body{
 #pokedex-list{
     background-color: white;
     border-radius: 12px;
+    padding: 12px;
 }
 
 #pd-container{
-
+    background-color: #EBEFF2;
+    padding: 12px;
 }
