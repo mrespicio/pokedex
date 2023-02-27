@@ -45,7 +45,7 @@ function expandCard(){
     let tax = pokedex[pkmHolder]['taxonomy'];
     let height = pokedex[pkmHolder]['height'];
     let weight = pokedex[pkmHolder]['weight'];
-    info.innerText = pokedex[pkmHolder]['catch-rate']; // FIX THIS
+    info.innerText = `${tax} | ${height} | ${weight}`
     //info.append(infoText);
 
 
@@ -72,7 +72,7 @@ async function getPokemon(num){
     let response = await fetch(url)
     let pkm = await response.json();
 
-    console.log(pkm);
+    //console.log(pkm);
     let pkmName = pkm.name; //return string
     let pkmTypes = pkm.types; //return array
     let pkmImg = pkm.sprites.other['official-artwork']['front_default']; //return img
@@ -88,9 +88,9 @@ async function getPokemon(num){
     response = await fetch(pkm.species.url);
     let pkmSpc = await response.json(); //pokemon species 
 
-    //console.log(pkmSpc);
+    console.log(pkmSpc);
     let pkmDesc = pkmSpc['flavor_text_entries'][0]['flavor_text'];
-    let pkmTx = pkmSpc.genera[7];
+    let pkmTx = pkmSpc.genera[7]['genus'];
     let pkmHap = pkmSpc['base_happiness'];
     let pkmCR = pkmSpc['capture_rate'];
     let pkmEgg = pkmSpc['egg_groups'];
