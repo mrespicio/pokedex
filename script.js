@@ -19,17 +19,27 @@ document.addEventListener('DOMContentLoaded', async () =>{
 
         pkm.innerHTML = `${i} ${pokedex[i]['name']}`
 
+        // display types
+        let type1 = document.createElement('div');
+        type1.innerText =  [pokedex][i]['type-one'];
+
+        //let type2 = document.createElement('div');
+        //type2.innerText = [pokedex][i]['type-two'];
+
+
+        // functionality to clicking on pokemon names
         pkm.addEventListener('click', updatePokemon); 
 
+        // append divs with sprites in front/to the left
         pkm.prepend(pkmIm);
         pdList.append(pkm);
     }
-    document.getElementById('expand').addEventListener('click', expandCard); //add event listener to expand button
+    // expand card shows detail and should minimize the right sidebar
+    document.getElementById('expand').addEventListener('click', expandCard); 
     console.log(pokedex);
 });
 
 function updatePokemon(){
-    //console.log(this.id)
     pkmHolder = this.id;
     document.getElementById('pkm-img').src = pokedex[this.id]['img'];
     document.getElementById('pkm-title').innerText = "#" +  this.id + " " + (pokedex[this.id].name).toUpperCase();
@@ -45,27 +55,13 @@ function expandCard(){
     let tax = pokedex[pkmHolder]['taxonomy'];
     let height = pokedex[pkmHolder]['height'];
     let weight = pokedex[pkmHolder]['weight'];
-    info.innerText = `${tax} | ${height} | ${weight}`
-    //info.append(infoText);
-
+    info.innerText = `The ${tax} | ${height} | ${weight}`
 
     // append description
     let description = document.getElementById('pkm-description');
     description.classList.add('desc-box');
-    description.append(pokedex[pkmHolder]['desc']);
+    description.innerText = pokedex[pkmHolder]['desc'];
 }
-
-/*
-let description = document.createElement('div');
-function expandCard(num){
-    // enter expanded view
-    pkmDisplay.classList.add('expanded'); //add expanded style, make card bigger
-
-    console.log('you clicked on the ' + num)
-    // description
-    description.innerText = pokedex[this.id]['name'];
-    pkmDisplay.append(description);
-}  */
 
 async function getPokemon(num){
     let url = "https://pokeapi.co/api/v2/pokemon/" + num.toString();
@@ -74,7 +70,19 @@ async function getPokemon(num){
 
     //console.log(pkm);
     let pkmName = pkm.name; //return string
-    let pkmTypes = pkm.types; //return array
+    let pkmTypeA = pkm.types[0]['type']['name']; 
+
+    //not every pokemon have two types
+    let pkmTypeB;
+    try{
+        pkmTypeB = pkm.types[1]['type']['name'];
+    } catch(e){
+        pkmTypeB = 'none';
+    }
+
+    //console.log(pkmTypeA);
+    //console.log(pkmTypeB);
+
     let pkmImg = pkm.sprites.other['official-artwork']['front_default']; //return img
     let pkmHeight = pkm.height;
     let pkmWeight = pkm.weight;
@@ -88,7 +96,7 @@ async function getPokemon(num){
     response = await fetch(pkm.species.url);
     let pkmSpc = await response.json(); //pokemon species 
 
-    console.log(pkmSpc);
+    //console.log(pkmSpc);
     let pkmDesc = pkmSpc['flavor_text_entries'][0]['flavor_text'];
     let pkmTx = pkmSpc.genera[7]['genus'];
     let pkmHap = pkmSpc['base_happiness'];
@@ -103,7 +111,8 @@ async function getPokemon(num){
         // in small card view
         "name" : pkmName, 
         "img" : pkmImg, 
-        "types" : pkmTypes,
+        "type-one" : pkmTypeA,
+        "type-two" : pkmTypeB,
 
         // expanded view left side
         "taxonomy" : pkmTx,

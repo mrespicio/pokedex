@@ -34,7 +34,7 @@ body{
 }
 
 .info-box{
-    
+    border: solid green 1px;
 }
 .desc-box{
     border: solid blue 1px;
