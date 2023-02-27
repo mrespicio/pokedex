@@ -17,15 +17,16 @@ document.addEventListener('DOMContentLoaded', async () =>{
         let pkmIm = document.createElement('img');
         pkmIm.src = pokedex[i]['icon-sprites']; 
 
-        pkm.innerHTML = `${i} ${pokedex[i]['name']}`
+
 
         // display types
         let type1 = document.createElement('div');
-        type1.innerText =  [pokedex][i]['type-one'];
+        type1.innerText =  pokedex[i]['type-one'];
 
-        //let type2 = document.createElement('div');
-        //type2.innerText = [pokedex][i]['type-two'];
+        let type2 = document.createElement('div');
+        type2.innerText = pokedex[i]['type-two'];
 
+        pkm.innerText = `${i} ${pokedex[i]['name']}`
 
         // functionality to clicking on pokemon names
         pkm.addEventListener('click', updatePokemon); 
@@ -46,6 +47,7 @@ function updatePokemon(){
 }
 
 
+// when card expands also make side bar smaller
 function expandCard(){
     let expander = document.getElementById('expand');
     expander.classList.add('expanded');
