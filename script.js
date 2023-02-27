@@ -12,10 +12,16 @@ document.addEventListener('DOMContentLoaded', async () =>{
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
-        pkm.innerText = `${i} ${pokedex[i]['name']}`
+
+        //create sprites
+        let pkmIm = document.createElement('img');
+        pkmIm.src = pokedex[i]['icon-sprites']; 
+
+        pkm.innerHTML = `${i} ${pokedex[i]['name']}`
 
         pkm.addEventListener('click', updatePokemon); 
 
+        pkm.prepend(pkmIm);
         pdList.append(pkm);
     }
     document.getElementById('expand').addEventListener('click', expandCard); //add event listener to expand button
@@ -34,11 +40,18 @@ function expandCard(){
     let expander = document.getElementById('expand');
     expander.classList.add('expanded');
 
-    //let info = document.getElementById('pkm-info');
-    //let infoText = pokedex[pkmHolder]['desc']; // FIX THIS
+    let info = document.getElementById('pkm-info');
+    info.classList.add('info-box');
+    let tax = pokedex[pkmHolder]['taxonomy'];
+    let height = pokedex[pkmHolder]['height'];
+    let weight = pokedex[pkmHolder]['weight'];
+    info.innerText = pokedex[pkmHolder]['catch-rate']; // FIX THIS
     //info.append(infoText);
 
+
+    // append description
     let description = document.getElementById('pkm-description');
+    description.classList.add('desc-box');
     description.append(pokedex[pkmHolder]['desc']);
 }
 
@@ -70,6 +83,7 @@ async function getPokemon(num){
     let pkmStats = pkm.stats;
     let pkmMoves = pkm.moves;
     let pkmSprites = pkm.sprites['front_default'];
+    let pkmIcon = pkm.sprites['versions']['generation-vii']['icons']['front_default'];
 
     response = await fetch(pkm.species.url);
     let pkmSpc = await response.json(); //pokemon species 
@@ -110,6 +124,7 @@ async function getPokemon(num){
         //"evo-chain" : pkmEvo,
         "stats" : pkmStats,
         "moveset" : pkmMoves,
-        "sprites" : pkmSprites
+        "evo-sprites" : pkmSprites,
+        "icon-sprites" : pkmIcon
     }
 }
