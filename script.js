@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
         // functionality to clicking on pokemon names
         pkm.addEventListener('click', updatePokemon); 
 
-        // append divs with sprites in front/to the left
+        // append sprites to div w/ pokemon name on pokedex
         pkm.prepend(pkmIm);
         pdList.append(pkm);
     }
@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
     console.log(pokedex);
 });
 
+// changes pokemon on display when clicked on on the pokedex list
 function updatePokemon(){
     pkmHolder = this.id;
     // update title and image
@@ -50,12 +51,28 @@ function updatePokemon(){
     else document.getElementById('type-two').innerText = pokedex[this.id]['type-two'];
 }
 
-
 // when card expands also make side bar smaller
 function expandCard(){
-    let expander = document.getElementById('expand');
-    expander.classList.add('expanded');
+    // expand the #expandable id
+    let expander = document.getElementById('expandable');
+    let listSize = document.getElementById('pokedex-list');
+    // expand
+    if(expander.classList.contains('collapsed')){
+        expander.classList.remove('collapsed');
+        expander.classList.add('expanded');
+        listSize.classList.remove('list-default')
+        listSize.classList.add('list-small');
 
+    } 
+    // collapse
+    else{
+        expander.classList.remove('expanded');
+        expander.classList.add('collapsed');
+        listSize.classList.add('list-default');
+        listSize.classList.remove('list-small')
+    }
+
+    // information and description for pokemon
     let info = document.getElementById('pkm-info');
     info.classList.add('info-box');
     let tax = pokedex[pkmHolder]['taxonomy'];
@@ -67,6 +84,15 @@ function expandCard(){
     let description = document.getElementById('pkm-description');
     description.classList.add('desc-box');
     description.innerText = pokedex[pkmHolder]['desc'];
+
+    // append evolution chain
+
+    // append abilities
+    
+    // append catch rate
+
+    //append habitat
+    
 }
 
 async function getPokemon(num){

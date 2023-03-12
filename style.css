@@ -18,20 +18,32 @@ body{
     width: 800px;
 }
 
+/* hide details */
+.collapsed{
+    display: none;
+}
+
 #pkm-img{
     border: solid 1px red;
 }
 
-#pokedex-list{
+/* regular pokedex */
+.list-default{
     background-color: white;
     border-radius: 12px;
     padding: 12px;
+}
+
+/* collapsed pokedex list */
+.list-small{
+    background-color: blue;
 }
 
 #pd-container{
     background-color: #EBEFF2;
     padding: 12px;
 }
+
 
 .info-box{
     border: solid green 1px;
