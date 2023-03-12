@@ -86,6 +86,7 @@ async function getPokemon(num){
         pkmTypeB = 'none';
     }
 
+    // from regular pokemon info
     let pkmImg = pkm.sprites.other['official-artwork']['front_default']; //return img
     let pkmHeight = pkm.height;
     let pkmWeight = pkm.weight;
@@ -99,6 +100,7 @@ async function getPokemon(num){
     response = await fetch(pkm.species.url);
     let pkmSpc = await response.json(); //pokemon species 
 
+    // from species
     //console.log(pkmSpc);
     let pkmDesc = pkmSpc['flavor_text_entries'][0]['flavor_text'];
     let pkmTx = pkmSpc.genera[7]['genus'];
@@ -107,7 +109,8 @@ async function getPokemon(num){
     let pkmEgg = pkmSpc['egg_groups'];
     let pkmHatch = pkmSpc['hatch_counter'];
     let pkmHab = pkmSpc.habitat;
-    //let pkmEvo = pkmSpc['evolution_chain'];
+    let pkmEvo = pkmSpc['evolution_chain'];
+    console.log(pkmEvo);
 
     // pokemon object
     pokedex[num] = {
@@ -133,7 +136,7 @@ async function getPokemon(num){
         "habitat" : pkmHab,
 
         // info needed for other stuff
-        //"evo-chain" : pkmEvo,
+        "evo-chain" : pkmEvo,
         "stats" : pkmStats,
         "moveset" : pkmMoves,
         "evo-sprites" : pkmSprites,
