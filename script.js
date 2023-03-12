@@ -16,15 +16,13 @@ document.addEventListener('DOMContentLoaded', async () =>{
         //create sprites
         let pkmIm = document.createElement('img');
         pkmIm.src = pokedex[i]['icon-sprites']; 
-
-
-        /*
+  
         // display types
         let type1 = document.createElement('div');
         type1.innerText =  pokedex[i]['type-one'];
 
         let type2 = document.createElement('div');
-        type2.innerText = pokedex[i]['type-two']; */
+        type2.innerText = pokedex[i]['type-two']; 
 
         pkm.innerText = `${i} ${pokedex[i]['name']}`
 
@@ -42,8 +40,11 @@ document.addEventListener('DOMContentLoaded', async () =>{
 
 function updatePokemon(){
     pkmHolder = this.id;
+    // update title and image
     document.getElementById('pkm-img').src = pokedex[this.id]['img'];
     document.getElementById('pkm-title').innerText = "#" +  this.id + " " + (pokedex[this.id].name).toUpperCase();
+
+    // update types
     document.getElementById('type-one').innerText = pokedex[this.id]['type-one'];
     if(pokedex[this.id]['type-two'] == 'none') document.getElementById('type-two').innerText = '';
     else document.getElementById('type-two').innerText = pokedex[this.id]['type-two'];
@@ -84,9 +85,6 @@ async function getPokemon(num){
     } catch(e){
         pkmTypeB = 'none';
     }
-
-    //console.log(pkmTypeA);
-    //console.log(pkmTypeB);
 
     let pkmImg = pkm.sprites.other['official-artwork']['front_default']; //return img
     let pkmHeight = pkm.height;
