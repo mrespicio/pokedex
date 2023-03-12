@@ -6,6 +6,9 @@ const pdList = document.getElementById('pd-container'); //append each pokemon he
 const pkmDisplay = document.getElementById('pokemon-display'); 
 let pkmHolder = 1;
 
+let expander = document.getElementById('expandable');
+let listSize = document.getElementById('pokedex-list');
+
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
     for(let i = 1; i<= 20; i++){
@@ -34,9 +37,16 @@ document.addEventListener('DOMContentLoaded', async () =>{
         pdList.append(pkm);
     }
     // expand card shows detail and should minimize the right sidebar
-    document.getElementById('expand').addEventListener('click', expandCard); 
+    let expandBtn = document.getElementById('expand');
+    let expStatus = document.getElementById('expandable');
+    expandBtn.addEventListener('click', () => {
+        if(expStatus.classList.contains('collapsed')) expandCard();
+        else collapseCard();
+    }); 
     console.log(pokedex);
 });
+
+
 
 // changes pokemon on display when clicked on on the pokedex list
 function updatePokemon(){
@@ -49,27 +59,28 @@ function updatePokemon(){
     document.getElementById('type-one').innerText = pokedex[this.id]['type-one'];
     if(pokedex[this.id]['type-two'] == 'none') document.getElementById('type-two').innerText = '';
     else document.getElementById('type-two').innerText = pokedex[this.id]['type-two'];
+
+    // left boxes
+
+    // update right boxes
+}
+
+/* abilities variables */
+function collapseCard(){
+    // collapse the #expandable id, update styles
+    expander.classList.remove('expanded');
+    expander.classList.add('collapsed');
+    listSize.classList.add('list-default');
+    listSize.classList.remove('list-small');
 }
 
 // display information
 function expandCard(){
-    // expand the #expandable id
-    let expander = document.getElementById('expandable');
-    let listSize = document.getElementById('pokedex-list');
-    // expand
-    if(expander.classList.contains('collapsed')){
-        expander.classList.remove('collapsed');
-        expander.classList.add('expanded');
-        listSize.classList.remove('list-default')
-        listSize.classList.add('list-small');
-    } 
-    // collapse
-    else{
-        expander.classList.remove('expanded');
-        expander.classList.add('collapsed');
-        listSize.classList.add('list-default');
-        listSize.classList.remove('list-small');
-    }
+    // expand the #expandable id, update styles
+    expander.classList.remove('collapsed');
+    expander.classList.add('expanded');
+    listSize.classList.remove('list-default')
+    listSize.classList.add('list-small');
 
     // information and description for pokemon
     let info = document.getElementById('pkm-info');
@@ -87,17 +98,16 @@ function expandCard(){
     evoChain.innerText = 'hello this will be the chain'
     // pkmEvo
 
-    /*
     // append abilities
     let abilities = document.getElementById('abilities-box');
     let abArray = pokedex[pkmHolder]['abilities'];
 
     let allAb = document.createElement('div');
-    // clear previous abilities
-    
-    console.log('initial all abilities is only the next line ')
-    console.log(allAb);
-    console.log('initial abilities have ended')
+
+        // clear previous abilities
+    while(abilities.lastElementChild) {
+		abilities.removeChild(abilities.lastElementChild)
+	}
 
     // append ability types to respective category
     let regAb = document.createElement('div');
@@ -113,11 +123,8 @@ function expandCard(){
     allAb.appendChild(regAb);
     allAb.appendChild(hiddenAb);
     
-    console.log('all abilities are: ')
-    console.log(allAb);
-
     //abilites is the abilities box in the html file
-    abilities.append(allAb); */
+    abilities.append(allAb);
 
     // append catch rate
     let catchRate = document.getElementById('catch-box');
@@ -126,6 +133,7 @@ function expandCard(){
     //append habitat
     let habitat = document.getElementById('hab-box');
     habitat.innerText = `Habitat: ${pokedex[pkmHolder]['habitat']}`
+
 }
 
 async function getPokemon(num){
