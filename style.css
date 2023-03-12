@@ -1,54 +1,133 @@
-body{
-    background-color: #EBEFF2;
+body {
+    background-color: #FFEDAF;
+    background-image: url('/pokedex/imgs/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
     display: flex;
+    font-family: 'Roboto', sans-serif;
 }
 
-#pokemon-display{
+/* nav bar  */
+#nav-bar {
+    background-color: #E33804;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* z-index: 100; */
+}
+
+#nav-left h1 {
+    font-size: 20px;
+    margin: 10px 100px;
+    cursor: pointer;
+}
+
+#nav-right {
+    display: flex;
+    align-items: center;
+    margin-right: 100px;
+    white-space: nowrap;
+}
+
+#nav-right ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+
+}
+
+#nav-right li {
+    margin-left: 100px;
+}
+
+#nav-right a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+#nav-right a:hover {
+    font-weight: 700;
+}
+
+/* pokemon display */
+#pokemon-display {
     background-color: white;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     border-radius: 12px;
-    margin: 30px;
+    margin: 100px;
 }
 
-#expand{
+#type-one,
+#type-two {
+    background-color: #333;
+    width: 50px;
+    color: white;
+    padding: 5px 20px;
+    /* margin: auto; */
+    border-radius: 20px;
+}
+
+#expand {
     padding: 8px;
     background-color: lightcoral;
 }
-.expanded{
+
+.expanded {
     background-color: green;
     width: 800px;
 }
 
 /* hide details */
-.collapsed{
+.collapsed {
     display: none;
 }
 
-#pkm-img{
+#pkm-img {
     border: solid 1px red;
 }
 
 /* regular pokedex */
-.list-default{
+#pokedex-list {
+    margin: 100px;
+}
+
+.list-default {
     background-color: white;
     border-radius: 12px;
-    padding: 12px;
+    padding: 40px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+#search {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 10px;
 }
 
 /* collapsed pokedex list */
-.list-small{
+.list-small {
     background-color: blue;
 }
 
-#pd-container{
+#pd-container {
     background-color: #EBEFF2;
-    padding: 12px;
+    padding: 20px;
+    border-radius: 20px;
 }
 
 
-.info-box{
+.info-box {
     border: solid green 1px;
 }
-.desc-box{
+
+.desc-box {
     border: solid blue 1px;
 }
-
