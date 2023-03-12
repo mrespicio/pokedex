@@ -8,7 +8,7 @@ let pkmHolder = 1;
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 10; i++){
+    for(let i = 1; i<= 20; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -51,7 +51,7 @@ function updatePokemon(){
     else document.getElementById('type-two').innerText = pokedex[this.id]['type-two'];
 }
 
-// when card expands also make side bar smaller
+// display information
 function expandCard(){
     // expand the #expandable id
     let expander = document.getElementById('expandable');
@@ -62,19 +62,17 @@ function expandCard(){
         expander.classList.add('expanded');
         listSize.classList.remove('list-default')
         listSize.classList.add('list-small');
-
     } 
     // collapse
     else{
         expander.classList.remove('expanded');
         expander.classList.add('collapsed');
         listSize.classList.add('list-default');
-        listSize.classList.remove('list-small')
+        listSize.classList.remove('list-small');
     }
 
     // information and description for pokemon
     let info = document.getElementById('pkm-info');
-    info.classList.add('info-box');
     let tax = pokedex[pkmHolder]['taxonomy'];
     let height = pokedex[pkmHolder]['height'];
     let weight = pokedex[pkmHolder]['weight'];
@@ -82,17 +80,52 @@ function expandCard(){
 
     // append description
     let description = document.getElementById('pkm-description');
-    description.classList.add('desc-box');
     description.innerText = pokedex[pkmHolder]['desc'];
 
     // append evolution chain
+    let evoChain = document.getElementById('evo-box');
+    evoChain.innerText = 'hello this will be the chain'
+    // pkmEvo
 
+    /*
     // append abilities
+    let abilities = document.getElementById('abilities-box');
+    let abArray = pokedex[pkmHolder]['abilities'];
+
+    let allAb = document.createElement('div');
+    // clear previous abilities
     
+    console.log('initial all abilities is only the next line ')
+    console.log(allAb);
+    console.log('initial abilities have ended')
+
+    // append ability types to respective category
+    let regAb = document.createElement('div');
+    let hiddenAb = document.createElement('div');
+
+    abArray.forEach(ob => {
+        let tempAb = document.createElement('p');
+        tempAb.innerText = ob['ability']['name'];
+        if(ob['is_hidden'] == true) hiddenAb.appendChild(tempAb);
+        else regAb.appendChild(tempAb);
+    }); 
+
+    allAb.appendChild(regAb);
+    allAb.appendChild(hiddenAb);
+    
+    console.log('all abilities are: ')
+    console.log(allAb);
+
+    //abilites is the abilities box in the html file
+    abilities.append(allAb); */
+
     // append catch rate
+    let catchRate = document.getElementById('catch-box');
+    catchRate.innerText = `Catch Rate: ${pokedex[pkmHolder]['catch-rate']}`; 
 
     //append habitat
-    
+    let habitat = document.getElementById('hab-box');
+    habitat.innerText = `Habitat: ${pokedex[pkmHolder]['habitat']}`
 }
 
 async function getPokemon(num){
@@ -134,9 +167,10 @@ async function getPokemon(num){
     let pkmCR = pkmSpc['capture_rate'];
     let pkmEgg = pkmSpc['egg_groups'];
     let pkmHatch = pkmSpc['hatch_counter'];
-    let pkmHab = pkmSpc.habitat;
+    let pkmHab = pkmSpc['habitat']['name'];
     let pkmEvo = pkmSpc['evolution_chain'];
-    console.log(pkmEvo);
+    //console.log(pkmEvo);
+
 
     // pokemon object
     pokedex[num] = {

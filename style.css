@@ -13,8 +13,9 @@ body{
     padding: 8px;
     background-color: lightcoral;
 }
+
 .expanded{
-    background-color: green;
+    background-color: lightgreen;
     width: 800px;
 }
 
@@ -44,10 +45,12 @@ body{
     padding: 12px;
 }
 
-
-.info-box{
+/* styles for basic info boxes */
+.generic-box{
     border: solid green 1px;
+    margin: 10px;
 }
+
 .desc-box{
     border: solid blue 1px;
 }
