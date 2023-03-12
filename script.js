@@ -99,32 +99,32 @@ function expandCard(){
     // pkmEvo
 
     // append abilities
-    let abilities = document.getElementById('abilities-box');
-    let abArray = pokedex[pkmHolder]['abilities'];
-
-    let allAb = document.createElement('div');
+    // put in function for organization since this is a lot of code for this one section
+    let appendAbilities = () =>{
+        let abilities = document.getElementById('abilities-box');
+        let abArray = pokedex[pkmHolder]['abilities'];
+        let allAb = document.createElement('div');
 
         // clear previous abilities
-    while(abilities.lastElementChild) {
-		abilities.removeChild(abilities.lastElementChild)
-	}
+        while(abilities.lastElementChild) {
+            abilities.removeChild(abilities.lastElementChild)
+        }
 
-    // append ability types to respective category
-    let regAb = document.createElement('div');
-    let hiddenAb = document.createElement('div');
+        // append ability types to respective category
+        let regAb = document.createElement('div');
+        let hiddenAb = document.createElement('div');
 
-    abArray.forEach(ob => {
-        let tempAb = document.createElement('p');
-        tempAb.innerText = ob['ability']['name'];
-        if(ob['is_hidden'] == true) hiddenAb.appendChild(tempAb);
-        else regAb.appendChild(tempAb);
-    }); 
-
-    allAb.appendChild(regAb);
-    allAb.appendChild(hiddenAb);
-    
-    //abilites is the abilities box in the html file
-    abilities.append(allAb);
+        abArray.forEach(ob => {
+            let tempAb = document.createElement('p');
+            tempAb.innerText = ob['ability']['name'];
+            if(ob['is_hidden'] == true) hiddenAb.appendChild(tempAb);
+            else regAb.appendChild(tempAb);
+        }); 
+        allAb.appendChild(regAb);
+        allAb.appendChild(hiddenAb);
+        abilities.append(allAb);
+    }
+    appendAbilities();
 
     // append catch rate
     let catchRate = document.getElementById('catch-box');
@@ -134,6 +134,25 @@ function expandCard(){
     let habitat = document.getElementById('hab-box');
     habitat.innerText = `Habitat: ${pokedex[pkmHolder]['habitat']}`
 
+    let appendStats = () => {
+        let stats = document.getElementById('stats-nums'); //append to this
+        console.log(pokedex[pkmHolder]['stats']);
+        let statsArr = pokedex[pkmHolder]['stats'];
+        let statHolder = document.createElement('div'); // append each stat to this
+
+        // clear previous status
+        while(stats.lastElementChild) {
+            stats.removeChild(stats.lastElementChild)
+        }
+        statsArr.forEach(item => {
+            //console.log(item['base_stat']);
+            let temp = document.createElement('p');
+            temp.innerText = item['base_stat'];
+            statHolder.appendChild(temp);
+        });
+        stats.append(statHolder);
+    }
+    appendStats();
 }
 
 async function getPokemon(num){

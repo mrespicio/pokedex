@@ -55,3 +55,15 @@ body{
     border: solid blue 1px;
 }
 
+#stats-box{
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+}
+
+#stat-labels{
+    border: solid red 1px;
+}
+#stats-num{
+    border: solid greenyellow 1px;
+    display: inline-block;
+}
