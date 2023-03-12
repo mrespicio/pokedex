@@ -74,6 +74,12 @@ function collapseCard(){
     listSize.classList.remove('list-small');
 }
 
+function clearItem(item){
+    while(item.lastElementChild) {
+        item.removeChild(item.lastElementChild)
+    }
+}
+
 // display information
 function expandCard(){
     // expand the #expandable id, update styles
@@ -103,26 +109,20 @@ function expandCard(){
     let appendAbilities = () =>{
         let abilities = document.getElementById('abilities-box');
         let abArray = pokedex[pkmHolder]['abilities'];
-        let allAb = document.createElement('div');
 
-        // clear previous abilities
-        while(abilities.lastElementChild) {
-            abilities.removeChild(abilities.lastElementChild)
-        }
+        let regAb = document.getElementById('regular-abilities');
+        let hidAb = document.getElementById('hidden-abilities');
 
-        // append ability types to respective category
-        let regAb = document.createElement('div');
-        let hiddenAb = document.createElement('div');
+        clearItem(regAb);
+        clearItem(hidAb);
 
         abArray.forEach(ob => {
             let tempAb = document.createElement('p');
             tempAb.innerText = ob['ability']['name'];
-            if(ob['is_hidden'] == true) hiddenAb.appendChild(tempAb);
+            if(ob['is_hidden'] == true) hidAb.appendChild(tempAb);
             else regAb.appendChild(tempAb);
         }); 
-        allAb.appendChild(regAb);
-        allAb.appendChild(hiddenAb);
-        abilities.append(allAb);
+
     }
     appendAbilities();
 
@@ -141,9 +141,8 @@ function expandCard(){
         let statHolder = document.createElement('div'); // append each stat to this
 
         // clear previous status
-        while(stats.lastElementChild) {
-            stats.removeChild(stats.lastElementChild)
-        }
+        clearItem(stats);
+
         statsArr.forEach(item => {
             //console.log(item['base_stat']);
             let temp = document.createElement('p');

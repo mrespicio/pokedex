@@ -55,6 +55,11 @@ body{
     border: solid blue 1px;
 }
 
+#abilities-box{
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+}
+
 #stats-box{
     display: grid;
     grid-template-columns: repeat(2, 200px);
