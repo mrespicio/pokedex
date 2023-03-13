@@ -72,3 +72,7 @@ body{
     border: solid greenyellow 1px;
     display: inline-block;
 }
+
+#regular-abilities{
+    border: solid 1px blue;
+}

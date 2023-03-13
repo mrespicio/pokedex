@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 20; i++){
+    for(let i = 1; i<= 53; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
         if(expStatus.classList.contains('collapsed')) expandCard();
         else collapseCard();
     }); 
-    console.log(pokedex);
+    //console.log(pokedex);
 });
 
 
@@ -101,30 +101,33 @@ function expandCard(){
 
     // append evolution chain
     let evoChain = document.getElementById('evo-box');
-    evoChain.innerText = 'hello this will be the chain'
+    evoChain.innerText = `this pokemon evolves from ${pokedex[pkmHolder]['evo-from']}`
     // pkmEvo
+    let evolveFrom = pokedex[pkmHolder]['evo-from'];
+    if(evolveFrom == null) console.log('none');
+    else console.log(`this pokemon evolves from ${evolveFrom}`);
+
+    
+
+    let evolveChainArr = pokedex[pkmHolder]['evo-chain'];
+    console.log(`this pokemon evolves to ${evolveChainArr}`)
 
     // append abilities
-    // put in function for organization since this is a lot of code for this one section
-    let appendAbilities = () =>{
-        let abilities = document.getElementById('abilities-box');
-        let abArray = pokedex[pkmHolder]['abilities'];
+    //let abilities = document.getElementById('abilities-box');
+    let regAb = document.getElementById('regular-abilities');
+    let hidAb = document.getElementById('hidden-abilities');
+    let abArray = pokedex[pkmHolder]['abilities'];
 
-        let regAb = document.getElementById('regular-abilities');
-        let hidAb = document.getElementById('hidden-abilities');
+    clearItem(regAb);
+    clearItem(hidAb);
 
-        clearItem(regAb);
-        clearItem(hidAb);
+    abArray.forEach(ob => {
+        let tempAb = document.createElement('p');
+        tempAb.innerText = ob['ability']['name'];
+        if(ob['is_hidden'] == true) hidAb.appendChild(tempAb);
+        else regAb.appendChild(tempAb);
+    }); 
 
-        abArray.forEach(ob => {
-            let tempAb = document.createElement('p');
-            tempAb.innerText = ob['ability']['name'];
-            if(ob['is_hidden'] == true) hidAb.appendChild(tempAb);
-            else regAb.appendChild(tempAb);
-        }); 
-
-    }
-    appendAbilities();
 
     // append catch rate
     let catchRate = document.getElementById('catch-box');
@@ -134,24 +137,23 @@ function expandCard(){
     let habitat = document.getElementById('hab-box');
     habitat.innerText = `Habitat: ${pokedex[pkmHolder]['habitat']}`
 
-    let appendStats = () => {
-        let stats = document.getElementById('stats-nums'); //append to this
-        console.log(pokedex[pkmHolder]['stats']);
-        let statsArr = pokedex[pkmHolder]['stats'];
-        let statHolder = document.createElement('div'); // append each stat to this
+    // append stats
+    let stats = document.getElementById('stats-nums'); //append to this
+    let statsArr = pokedex[pkmHolder]['stats'];
+    let statHolder = document.createElement('div'); // append each stat to this
 
-        // clear previous status
-        clearItem(stats);
+    // clear previous status
+    clearItem(stats);
 
-        statsArr.forEach(item => {
-            //console.log(item['base_stat']);
-            let temp = document.createElement('p');
-            temp.innerText = item['base_stat'];
-            statHolder.appendChild(temp);
-        });
-        stats.append(statHolder);
-    }
-    appendStats();
+    statsArr.forEach(item => {
+        let temp = document.createElement('p');
+        temp.innerText = item['base_stat'];
+        statHolder.appendChild(temp);
+    });
+    stats.append(statHolder);
+
+
+
 }
 
 async function getPokemon(num){
@@ -194,8 +196,23 @@ async function getPokemon(num){
     let pkmEgg = pkmSpc['egg_groups'];
     let pkmHatch = pkmSpc['hatch_counter'];
     let pkmHab = pkmSpc['habitat']['name'];
-    let pkmEvo = pkmSpc['evolution_chain'];
-    //console.log(pkmEvo);
+
+    let pkmEvoFrom;
+    try{
+        pkmEvoFrom = pkmSpc['evolves_from_species']['name'];
+    }
+    catch{
+        pkmEvoFrom = 'none';
+    }
+ 
+    // from evo chain
+    let chain = "https://pokeapi.co/api/v2/evolution-chain/" + num.toString();
+    response = await fetch(chain);
+    let pkEv = await response.json();
+    
+    let evoArr = pkEv['chain']['evolves_to'][0];
+    //let reqArr = pkEv['chain']['evolves_to'];
+    //console.log(evoArr);
 
 
     // pokemon object
@@ -222,10 +239,15 @@ async function getPokemon(num){
         "habitat" : pkmHab,
 
         // info needed for other stuff
-        "evo-chain" : pkmEvo,
         "stats" : pkmStats,
         "moveset" : pkmMoves,
         "evo-sprites" : pkmSprites,
-        "icon-sprites" : pkmIcon
+        "icon-sprites" : pkmIcon,
+
+        //evolution
+        "evo-from" : pkmEvoFrom,
+        "evo-chain" : evoArr, // array with pokes it evolves into
+        //"evo-chain-req" : idk // array w/ requirements to evolve pok
+
     }
 }
