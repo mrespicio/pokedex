@@ -41,6 +41,7 @@ class evoChain{
     }
 }
 
+/*
 // build tree
 function test(){
     let tree = new evoChain();
@@ -52,4 +53,4 @@ function test(){
     tree.traverseBFS((node) => console.log('current node: ', node));
 }
 
-test();
+test(); */
