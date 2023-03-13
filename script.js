@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 53; i++){
+    for(let i = 1; i<= 9; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -107,10 +107,12 @@ function expandCard(){
     if(evolveFrom == null) console.log('none');
     else console.log(`this pokemon evolves from ${evolveFrom}`);
 
-    
 
     let evolveChainArr = pokedex[pkmHolder]['evo-chain'];
     console.log(`this pokemon evolves to ${evolveChainArr}`)
+
+
+
 
     // append abilities
     //let abilities = document.getElementById('abilities-box');
@@ -151,8 +153,6 @@ function expandCard(){
         statHolder.appendChild(temp);
     });
     stats.append(statHolder);
-
-
 
 }
 
@@ -204,16 +204,32 @@ async function getPokemon(num){
     catch{
         pkmEvoFrom = 'none';
     }
+
+    // get chain from species
+    //let chain = "https://pokeapi.co/api/v2/pokemon-species/" + num.toString();
+    response = await fetch(pkmSpc['evolution_chain']['url']);
+    let pkmEv = await response.json();
+    let evoArr = pkmEv['chain']['evolves_to'][0]['species']['name']; // second evo
+    console.log(pkmEv);
+
  
+    /*
     // from evo chain
     let chain = "https://pokeapi.co/api/v2/evolution-chain/" + num.toString();
     response = await fetch(chain);
     let pkEv = await response.json();
     
-    let evoArr = pkEv['chain']['evolves_to'][0];
-    //let reqArr = pkEv['chain']['evolves_to'];
-    //console.log(evoArr);
+    // return array
+    let evoArr;
+    try{
+        evoArr = pkEv['chain']['evolves_to'][0]['species']['name'];
+    }
+    catch{
+        evoArr = 'none';
+    }
 
+    //let reqArr = pkEv['chain']['evolves_to'];
+    //console.log(evoArr); */
 
     // pokemon object
     pokedex[num] = {
