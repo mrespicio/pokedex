@@ -100,18 +100,23 @@ function expandCard(){
     description.innerText = pokedex[pkmHolder]['desc'];
 
     // append evolution chain
-    let evoChain = document.getElementById('evo-box');
-    evoChain.innerText = `this pokemon evolves from ${pokedex[pkmHolder]['evo-from']}`
+    let evoChainDis = document.getElementById('evo-box');
+    evoChainDis.innerText = `this pokemon evolves from ${pokedex[pkmHolder]['evo-from']}`
     // pkmEvo
     let evolveFrom = pokedex[pkmHolder]['evo-from'];
     if(evolveFrom == null) console.log('none');
     else console.log(`this pokemon evolves from ${evolveFrom}`);
 
+    //get evolution tree
+    //display each node
 
-    let evolveChainArr = pokedex[pkmHolder]['evo-chain'];
-    console.log(`this pokemon evolves to ${evolveChainArr}`)
 
 
+    //let evolveChainArr = pokedex[pkmHolder]['evo-chain'];
+    //console.log(`this pokemon evolves to ${evolveChainArr}`)
+    console.log(pokedex[pkmHolder]['evo-one'])
+    console.log(pokedex[pkmHolder]['evo-two'])
+    console.log(pokedex[pkmHolder]['evo-three'])
 
 
     // append abilities
@@ -206,31 +211,79 @@ async function getPokemon(num){
     }
 
     // get chain from species
-    //let chain = "https://pokeapi.co/api/v2/pokemon-species/" + num.toString();
     response = await fetch(pkmSpc['evolution_chain']['url']);
     let pkmEv = await response.json();
-    let evoArr = pkmEv['chain']['evolves_to'][0]['species']['name']; // second evo
+    
+    function Node(data){
+        this.data = data;
+        this.children = [];
+    }
+
+    // evo tree data structure, holds evolution chain
+    // used tree bc some pokes have varying evolutions
+    class evoChain{
+        // initialize tree
+        constructor(pkm){
+            this.root = null; // node at top is empty
+        }
+        // add new evos
+        add(data, toNodeData){
+            const node = new Node(data);
+            const parent = toNodeData ? this.findBFS(toNodeData) : null; //this node data is true then it will findbfs
+            if(parent) parent.children.push(node); // find parent, push new evo to prev evo
+            else{
+                if(!this.root) this.root = node; // make this node the root
+                else return 'tried to store node at root when root already exists'
+            }
+        }
+        findBFS(data){
+            const queue = [this.root];
+            let n = null; 
+
+            this.traverseBFS((node) =>{
+                if(node.data == data) n = node; //found data
+            })
+            return n;
+        }
+        traverseBFS(callback){
+            const queue = [this.root]
+            if(callback){ // goes through all nodes in tree
+                while(queue.length){
+                    const node = queue.shift();
+                    callback(node);
+                    for(const child of node.children) queue.push(child);
+                }
+            }
+        }
+    }
+
+    // build tree
+    function test(){
+        let evolutionTree = new evoChain();
+        tree.add('node1');
+        tree.add('node2', 'node1');
+        tree.add('node3', 'node2');
+        tree.add('node4', 'node1');
+
+        // display tree
+        tree.traverseBFS((node) => console.log('current node: ', node));
+    }
+
+    let evoOne = pkmEv['chain']['species']['name']; // first evo
+    //let evoOneNode = new EvoNode(evoOne); // now first evo is in tree
+
+
+    // iterate evolves_to, get species and add as child to parent
+    // check if that species has an evolves_to
+    // if not evolves_to, then the branch is done
+    let evoTwo = pkmEv['chain']['evolves_to'][0]['species']['name'];
+    let evoThree = pkmEv['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
     console.log(pkmEv);
 
- 
-    /*
-    // from evo chain
-    let chain = "https://pokeapi.co/api/v2/evolution-chain/" + num.toString();
-    response = await fetch(chain);
-    let pkEv = await response.json();
+    let evoArr = [];
     
-    // return array
-    let evoArr;
-    try{
-        evoArr = pkEv['chain']['evolves_to'][0]['species']['name'];
-    }
-    catch{
-        evoArr = 'none';
-    }
-
-    //let reqArr = pkEv['chain']['evolves_to'];
-    //console.log(evoArr); */
-
+    evoArr = pkmEv['chain']['evolves_to'][0]['species']['name']; 
+    
     // pokemon object
     pokedex[num] = {
         // in small card view
@@ -264,6 +317,10 @@ async function getPokemon(num){
         "evo-from" : pkmEvoFrom,
         "evo-chain" : evoArr, // array with pokes it evolves into
         //"evo-chain-req" : idk // array w/ requirements to evolve pok
+        "evo-one" : evoOne,
+        "evo-two" : evoTwo,
+        "evo-three" : evoThree
 
+        //return evo tree
     }
 }
