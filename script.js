@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 9; i++){
+    for(let i = 1; i<= 136; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -223,14 +223,22 @@ async function getPokemon(num){
     // if not evolves_to, then the branch is done
 
     // build tree
-    function build(pkmEv){
+    async function build(){
         let tree = new evoChain();
+        let root = pkmEv['chain']['species']['name'];//first evo becomes root
+        tree.add(root); 
+        let evChainOb = pkmEv['chain']['evolves_to'];
 
+        evChainOb.forEach((pk, i) => {
+            let levelOne = pkmEv['chain']['evolves_to'][i]['species']['name']; //add second evos to root
+            tree.add(levelOne, root);
+            // levelTwo = third evo
+            i++;
+        })
 
-
-        return tree;
         // display tree
         tree.traverseBFS((node) => console.log('current node: ', node));
+        return tree;
     }
     build();
 
