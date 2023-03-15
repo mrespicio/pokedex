@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 10; i++){
+    for(let i = 43; i<= 45; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -100,14 +100,16 @@ function expandCard(){
     description.innerText = pokedex[pkmHolder]['desc'];
 
     // append evolution chain
-    let evoChainDis = document.getElementById('evo-box');
-
-    // object, need to access promise result, prob have to use .then
+    let evoTreeDisplay = document.getElementById('evo-box');
+    evoTreeDisplay.innerText = ''; //clear chain after ever reclick
+    
+    // traverse evolution tree/ append to display
     let evoTree = pokedex[pkmHolder]['evo-tree'];
-    console.log('the tree is a type ' + typeof evoTree);
-    evoTree.traverseBFS((node) => console.log('current node: ', node));
-
-
+    evoTree.traverseBFS((node) => {
+        evoTreeDisplay.append(node['data']);
+        evoTreeDisplay.append(' ');
+    }); 
+    
     // append abilities
     //let abilities = document.getElementById('abilities-box');
     let regAb = document.getElementById('regular-abilities');
@@ -146,7 +148,6 @@ function expandCard(){
         statHolder.appendChild(temp);
     });
     stats.append(statHolder);
-
 
 }
 
@@ -222,8 +223,6 @@ async function getPokemon(num){
     } //build
     let evoTree = build();
 
-    //console.log(pokedex[1]);
-
     // pokemon object
     pokedex[num] = {
         // in small card view
@@ -254,15 +253,6 @@ async function getPokemon(num){
         "icon-sprites" : pkmIcon,
 
         //evolution
-        "evo-tree" : evoTree //object
-        /*
-        "evo-from" : pkmEvoFrom,
-        "evo-chain" : evoArr, // array with pokes it evolves into
-        //"evo-chain-req" : idk // array w/ requirements to evolve pok
-        "evo-one" : evoOne,
-        "evo-two" : evoTwo,
-        "evo-three" : evoThree */
-
-        //return evo tree
+        "evo-tree" : evoTree // tree object
     } //pkm obj
 } // getpokemon
