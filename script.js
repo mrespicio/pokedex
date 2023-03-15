@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 133; i<= 136; i++){
+    for(let i = 1; i<= 10; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -101,24 +101,11 @@ function expandCard(){
 
     // append evolution chain
     let evoChainDis = document.getElementById('evo-box');
-    /*
-    evoChainDis.innerText = `this pokemon evolves from ${pokedex[pkmHolder]['evo-from']}`
-    // pkmEvo
-    let evolveFrom = pokedex[pkmHolder]['evo-from'];
-    if(evolveFrom == null) console.log('none');
-    else console.log(`this pokemon evolves from ${evolveFrom}`); */
 
-    //get evolution tree
-    //display each node
-
-
-
-    /*
-    //let evolveChainArr = pokedex[pkmHolder]['evo-chain'];
-    //console.log(`this pokemon evolves to ${evolveChainArr}`)
-    console.log(pokedex[pkmHolder]['evo-one'])
-    console.log(pokedex[pkmHolder]['evo-two'])
-    console.log(pokedex[pkmHolder]['evo-three']) */
+    // object, need to access promise result, prob have to use .then
+    let evoTree = pokedex[pkmHolder]['evo-tree'];
+    console.log('the tree is a type ' + typeof evoTree);
+    evoTree.traverseBFS((node) => console.log('current node: ', node));
 
 
     // append abilities
@@ -136,7 +123,6 @@ function expandCard(){
         if(ob['is_hidden'] == true) hidAb.appendChild(tempAb);
         else regAb.appendChild(tempAb);
     }); 
-
 
     // append catch rate
     let catchRate = document.getElementById('catch-box');
@@ -160,6 +146,7 @@ function expandCard(){
         statHolder.appendChild(temp);
     });
     stats.append(statHolder);
+
 
 }
 
@@ -208,10 +195,9 @@ async function getPokemon(num){
     // get chain from species
     response = await fetch(pkmSpc['evolution_chain']['url']);
     let pkmEv = await response.json();
-    
 
     // build tree
-    async function build(){
+    function build(){
         let tree = new evoChain();
         let root = pkmEv['chain']['species']['name'];
         tree.add(root); //first evo becomes root
@@ -221,6 +207,7 @@ async function getPokemon(num){
             //key : 0, 1, etc
             let item = evoChainObj[i]['species']['name']; //add second evos to root
             tree.add(item, root);
+
             let nextEvoChainObj = evoChainObj[i]['evolves_to']; //iterate this object for next line of evolutions
             nextEvoChainObj.forEach((nextKey, j) =>{
                 let nextItem = nextEvoChainObj[j]['species']['name'];
@@ -229,15 +216,14 @@ async function getPokemon(num){
             });
             i++;
         })
-
         // display tree
-        tree.traverseBFS((node) => console.log('current node: ', node));
-        //return tree;
-
+        //tree.traverseBFS((node) => console.log('current node: ', node));
+        return tree; //return object
     } //build
-    build();
+    let evoTree = build();
 
-    
+    //console.log(pokedex[1]);
+
     // pokemon object
     pokedex[num] = {
         // in small card view
@@ -268,6 +254,7 @@ async function getPokemon(num){
         "icon-sprites" : pkmIcon,
 
         //evolution
+        "evo-tree" : evoTree //object
         /*
         "evo-from" : pkmEvoFrom,
         "evo-chain" : evoArr, // array with pokes it evolves into
@@ -277,5 +264,5 @@ async function getPokemon(num){
         "evo-three" : evoThree */
 
         //return evo tree
-    }
-}
+    } //pkm obj
+} // getpokemon
