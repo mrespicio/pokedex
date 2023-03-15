@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 136; i++){
+    for(let i = 133; i<= 136; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -204,43 +204,100 @@ async function getPokemon(num){
     let pkmHatch = pkmSpc['hatch_counter'];
     let pkmHab = pkmSpc['habitat']['name'];
 
-    /*
-    let pkmEvoFrom;
-    try{
-        pkmEvoFrom = pkmSpc['evolves_from_species']['name'];
-    }
-    catch{
-        pkmEvoFrom = 'none';
-    } */
 
     // get chain from species
     response = await fetch(pkmSpc['evolution_chain']['url']);
     let pkmEv = await response.json();
     
 
-    // iterate evolves_to, get species and add as child to parent
-    // check if that species has an evolves_to
-    // if not evolves_to, then the branch is done
+
+
+    async function iterate(obj, p){
+        let treeTemp = new evoChain()
+        let parent = obj['species']['name'];
+        let item = obj['evolves_to'][0]['species']['name']
+        iterate(obj['evolves_to'], parent);
+        console.log(obj);
+        console.log(parent);
+        treeTemp.add(item, parent);
+            
+        /*
+        let parent = evChainObj['species']['name']; //string
+        console.log('the parent node is ' + parent) 
+        
+        let item = evChainObj['evolves_to'][key]['species']['name']; //one evolution
+        tree.add(item, parent);
+
+        //evChainObj = evChainObj[key]['species']['name'];
+
+        console.log(item); */
+        //iterate(evChainObj);
+        
+    }
 
     // build tree
     async function build(){
         let tree = new evoChain();
-        let root = pkmEv['chain']['species']['name'];//first evo becomes root
-        tree.add(root); 
-        let evChainOb = pkmEv['chain']['evolves_to'];
+        let root = pkmEv['chain']['species']['name'];
+        tree.add(root); //first evo becomes root
 
-        evChainOb.forEach((pk, i) => {
-            let levelOne = pkmEv['chain']['evolves_to'][i]['species']['name']; //add second evos to root
-            tree.add(levelOne, root);
+
+
+        
+        //object
+        //let evoChainObj = pkmEv['chain']; 
+        /*
+        if(Object.keys(evoChainObj['evolves_to']).length < 1) console.log('this has no evoltion');
+        for(let key in evoChainObj){
+            let item = evoChainObj['species']['name'];
+            tree.add('item', 'root');
+        } */
+
+        //else{
+            //now we iterate evolves_to array
+            
+            //console.log(evoChainObj['evolves_to'][0]['species']['name']); 
+        //} 
+       
+        //iterate object
+        /*
+        for(let key in evoChainObj){
+            if(key == 'evolves_to') console.log('we are in the chain');
+
+            /*
+            console.log(key);
+            let item = evoChainObj[key]['species']['name']
+            tree.add(item, root); 
+            console.log(item);
+        } */
+
+        //iterate(evoChainObj);
+        //console.log(evoChainObj)
+
+        let evoChainObj = pkmEv['chain']['evolves_to']; //object 
+        evoChainObj.forEach((key, i) => {
+            //key : 0, 1, etc
+            let item = evoChainObj[i]['species']['name']; //add second evos to root
+            tree.add(item, root);
+            let nextEvoChainObj = evoChainObj[i]['evolves_to']; //iterate this object for next line of evolutions
+            nextEvoChainObj.forEach((nextKey, j) =>{
+                let nextItem = nextEvoChainObj[j]['species']['name'];
+                tree.add(nextItem, item);
+                j++;
+            });
+
+            
+            // if levelone has an evolves_to length > 0; append child to parent
             // levelTwo = third evo
             i++;
         })
-
         // display tree
         tree.traverseBFS((node) => console.log('current node: ', node));
-        return tree;
-    }
+        //return tree;
+
+    } //build
     build();
+    // return tree to variable
 
     /*
     let evoOne = pkmEv['chain']['species']['name']; // first evo
