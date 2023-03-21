@@ -218,14 +218,11 @@ async function getPokemon(num){
         evoChainObj.forEach((key, i) => {
             //key : 0, 1, etc
             let item = evoChainObj[i]['species']['name']; 
-            //item.sprite = 'hello';
             tree.add(item, root); //add second evos to root
-            //console.log('the item is '+ item.sprite);
             
             let nextEvoChainObj = evoChainObj[i]['evolves_to']; //iterate this object for next line of evolutions
             nextEvoChainObj.forEach((nextKey, j) =>{
                 let nextItem = nextEvoChainObj[j]['species']['name'];
-                nextItem.sprite = 'hello';
                 tree.add(nextItem, item);
                 j++;
             });
