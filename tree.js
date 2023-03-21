@@ -1,6 +1,7 @@
 function Node(data){
-    this.data = data;
-    this.children = [];
+    this.data = data; //string
+    this.children = []; //array
+    this.sprite = ''; //string
 }
     
 // evo tree data structure, holds evolution chain

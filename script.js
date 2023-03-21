@@ -104,12 +104,21 @@ function expandCard(){
     evoTreeDisplay.innerText = ''; //clear chain after ever reclick
     
     // traverse evolution tree/ append to display
+    // *to do: if new evolution line, display another branch
     let evoTree = pokedex[pkmHolder]['evo-tree'];
     evoTree.traverseBFS((node) => {
+        let pkName = node['data'];
+        let evoSpriteItem = document.createElement('img');
+        evoSpriteItem.src = pokedex[pkmHolder]['icon-sprites'];
         evoTreeDisplay.append(node['data']);
         evoTreeDisplay.append(' ');
+        evoTreeDisplay.appendChild(evoSpriteItem);
+        //console.log(evoSpriteItem);
+        console.log(pkName);
     }); 
-    
+    //console.log(typeof evoSpriteItem);
+    console.log(evoTree);
+
     // append abilities
     //let abilities = document.getElementById('abilities-box');
     let regAb = document.getElementById('regular-abilities');
@@ -200,18 +209,23 @@ async function getPokemon(num){
     // build tree
     function build(){
         let tree = new evoChain();
-        let root = pkmEv['chain']['species']['name'];
+        let root = pkmEv['chain']['species']['name']; //string
+        console.log(typeof root)
+        //root.sprite = 'this is the root'
         tree.add(root); //first evo becomes root
 
         let evoChainObj = pkmEv['chain']['evolves_to']; //object 
         evoChainObj.forEach((key, i) => {
             //key : 0, 1, etc
-            let item = evoChainObj[i]['species']['name']; //add second evos to root
-            tree.add(item, root);
-
+            let item = evoChainObj[i]['species']['name']; 
+            //item.sprite = 'hello';
+            tree.add(item, root); //add second evos to root
+            //console.log('the item is '+ item.sprite);
+            
             let nextEvoChainObj = evoChainObj[i]['evolves_to']; //iterate this object for next line of evolutions
             nextEvoChainObj.forEach((nextKey, j) =>{
                 let nextItem = nextEvoChainObj[j]['species']['name'];
+                nextItem.sprite = 'hello';
                 tree.add(nextItem, item);
                 j++;
             });
