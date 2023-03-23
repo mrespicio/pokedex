@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', async () =>{
         if(expStatus.classList.contains('collapsed')) expandCard();
         else collapseCard();
     }); 
-    //console.log(pokedex);
 });
 
 // changes pokemon on display when clicked on on the pokedex list
@@ -67,16 +66,18 @@ function updatePokemon(){
     // description
     document.getElementById('pkm-description').innerText = pokedex[pkmHolder]['desc'];
 
-    // update right boxes
+    // right boxes
     //update evolution chain
-    //document.getElementById('evo-box').innerText = '';
+    appendEvolutions();
 
     // update abilities
+    appendAbilities();
 
     document.getElementById('catch-box').innerText = `Catch Rate: ${pokedex[pkmHolder]['catch-rate']}`; ;
     document.getElementById('hab-box').innerText = `Habitat: ${pokedex[pkmHolder]['habitat']}`;
 
     // update stats
+    appendStats();
 }
 
 /* abilities variables */
