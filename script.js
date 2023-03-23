@@ -46,8 +46,6 @@ document.addEventListener('DOMContentLoaded', async () =>{
     //console.log(pokedex);
 });
 
-
-
 // changes pokemon on display when clicked on on the pokedex list
 function updatePokemon(){
     pkmHolder = this.id;
@@ -56,13 +54,29 @@ function updatePokemon(){
     document.getElementById('pkm-title').innerText = "#" +  this.id + " " + (pokedex[this.id].name).toUpperCase();
 
     // update types
-    document.getElementById('type-one').innerText = pokedex[this.id]['type-one'];
+    document.getElementById('type-one').innerText = (pokedex[this.id]['type-one']).toUpperCase();
     if(pokedex[this.id]['type-two'] == 'none') document.getElementById('type-two').innerText = '';
-    else document.getElementById('type-two').innerText = pokedex[this.id]['type-two'];
+    else document.getElementById('type-two').innerText = (pokedex[this.id]['type-two']).toUpperCase();
 
     // left boxes
+    // info
+    let tax = pokedex[pkmHolder]['taxonomy'];
+    let height = pokedex[pkmHolder]['height'];
+    let weight = pokedex[pkmHolder]['weight'];
+    document.getElementById('pkm-info').innerText = `The ${tax} | ${height} | ${weight}`;
+    // description
+    document.getElementById('pkm-description').innerText = pokedex[pkmHolder]['desc'];
 
     // update right boxes
+    //update evolution chain
+    //document.getElementById('evo-box').innerText = '';
+
+    // update abilities
+
+    document.getElementById('catch-box').innerText = `Catch Rate: ${pokedex[pkmHolder]['catch-rate']}`; ;
+    document.getElementById('hab-box').innerText = `Habitat: ${pokedex[pkmHolder]['habitat']}`;
+
+    // update stats
 }
 
 /* abilities variables */
@@ -80,6 +94,66 @@ function clearItem(item){
     }
 }
 
+function appendEvolutions(){
+    // append evolution chain
+    let evoTreeDisplay = document.getElementById('evo-box');
+    evoTreeDisplay.innerText = ''; //clear chain after ever reclick
+    
+    // traverse evolution tree/ append to display
+    // *to do: if new evolution line, display another branch
+    let evoTree = pokedex[pkmHolder]['evo-tree'];
+    evoTree.traverseBFS((node) => {
+        let pkmEvoString = node['data']; // name and url
+        let pkmEvoArr = pkmEvoString.split(' '); 
+
+        let pkmEvoName = pkmEvoArr[0]; //pokemon name
+
+        let pkmEvoSprite = pkmEvoArr[1]; // raw url, string
+        let pkmEvoSpriteArr = pkmEvoSprite.split('/'); //string
+        let currentId = Number(pkmEvoSpriteArr[6]); // pokemon id
+
+        // create sprite
+        let evoSpriteItem = document.createElement('img');
+        evoSpriteItem.src = pokedex[currentId]['icon-sprites']; 
+
+        // append name and sprite
+        evoTreeDisplay.append(pkmEvoName);
+        evoTreeDisplay.append(' ');
+        evoTreeDisplay.appendChild(evoSpriteItem);
+    });
+}
+
+function appendAbilities(){
+    let regAb = document.getElementById('regular-abilities');
+    let hidAb = document.getElementById('hidden-abilities');
+    let abArray = pokedex[pkmHolder]['abilities'];
+
+    clearItem(regAb);
+    clearItem(hidAb);
+
+    abArray.forEach(ob => {
+        let tempAb = document.createElement('p');
+        tempAb.innerText = ob['ability']['name'];
+        if(ob['is_hidden'] == true) hidAb.appendChild(tempAb);
+        else regAb.appendChild(tempAb);
+    });
+}
+
+function appendStats(){
+    let stats = document.getElementById('stats-nums'); //append to this
+    let statsArr = pokedex[pkmHolder]['stats'];
+    let statHolder = document.createElement('div'); // append each stat to this
+
+    // clear previous status
+    clearItem(stats);
+
+    statsArr.forEach(item => {
+        let temp = document.createElement('p');
+        temp.innerText = item['base_stat'];
+        statHolder.appendChild(temp);
+    });
+    stats.append(statHolder);
+}
 // display information
 function expandCard(){
     // expand the #expandable id, update styles
@@ -99,53 +173,9 @@ function expandCard(){
     let description = document.getElementById('pkm-description');
     description.innerText = pokedex[pkmHolder]['desc'];
 
-    // append evolution chain
-    let evoTreeDisplay = document.getElementById('evo-box');
-    evoTreeDisplay.innerText = ''; //clear chain after ever reclick
-    
-    // traverse evolution tree/ append to display
-    // *to do: if new evolution line, display another branch
-
-    let evoTree = pokedex[pkmHolder]['evo-tree'];
-    evoTree.traverseBFS((node) => {
-        //get id of current node data
-        let pkmEvoString = node['data']; // name and url
-        let pkmEvoArr = pkmEvoString.split(' '); 
-
-        let pkmEvoName = pkmEvoArr[0]; //pokemon name
-
-        let pkmEvoSprite = pkmEvoArr[1]; // raw url, string
-        let pkmEvoSpriteArr = pkmEvoSprite.split('/'); //string
-        let currentId = Number(pkmEvoSpriteArr[6]); // pokemon id
-        console.log(currentId);
-
-        let evoSpriteItem = document.createElement('img');
-        evoSpriteItem.src = pokedex[currentId]['icon-sprites'];
-
-        evoTreeDisplay.append(pkmEvoName);
-        evoTreeDisplay.append(' ');
-        evoTreeDisplay.appendChild(evoSpriteItem);
-        //console.log(evoSpriteItem);
-        //console.log(pkmEvoString);
-    }); 
-    //console.log(typeof evoSpriteItem);
-    console.log(evoTree);
-
-    // append abilities
-    //let abilities = document.getElementById('abilities-box');
-    let regAb = document.getElementById('regular-abilities');
-    let hidAb = document.getElementById('hidden-abilities');
-    let abArray = pokedex[pkmHolder]['abilities'];
-
-    clearItem(regAb);
-    clearItem(hidAb);
-
-    abArray.forEach(ob => {
-        let tempAb = document.createElement('p');
-        tempAb.innerText = ob['ability']['name'];
-        if(ob['is_hidden'] == true) hidAb.appendChild(tempAb);
-        else regAb.appendChild(tempAb);
-    }); 
+    // append evolutions and abilities
+    appendEvolutions();
+    appendAbilities();
 
     // append catch rate
     let catchRate = document.getElementById('catch-box');
@@ -153,23 +183,10 @@ function expandCard(){
 
     //append habitat
     let habitat = document.getElementById('hab-box');
-    habitat.innerText = `Habitat: ${pokedex[pkmHolder]['habitat']}`
+    habitat.innerText = `Habitat: ${pokedex[pkmHolder]['habitat']}`;
 
     // append stats
-    let stats = document.getElementById('stats-nums'); //append to this
-    let statsArr = pokedex[pkmHolder]['stats'];
-    let statHolder = document.createElement('div'); // append each stat to this
-
-    // clear previous status
-    clearItem(stats);
-
-    statsArr.forEach(item => {
-        let temp = document.createElement('p');
-        temp.innerText = item['base_stat'];
-        statHolder.appendChild(temp);
-    });
-    stats.append(statHolder);
-
+   appendStats();
 }
 
 async function getPokemon(num, namePok){
