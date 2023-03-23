@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 43; i<= 45; i++){
+    for(let i = 1; i<= 9; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -105,16 +105,28 @@ function expandCard(){
     
     // traverse evolution tree/ append to display
     // *to do: if new evolution line, display another branch
+
     let evoTree = pokedex[pkmHolder]['evo-tree'];
     evoTree.traverseBFS((node) => {
-        let pkName = node['data'];
+        //get id of current node data
+        let pkmEvoString = node['data']; // name and url
+        let pkmEvoArr = pkmEvoString.split(' '); 
+
+        let pkmEvoName = pkmEvoArr[0]; //pokemon name
+
+        let pkmEvoSprite = pkmEvoArr[1]; // raw url, string
+        let pkmEvoSpriteArr = pkmEvoSprite.split('/'); //string
+        let currentId = Number(pkmEvoSpriteArr[6]); // pokemon id
+        console.log(currentId);
+
         let evoSpriteItem = document.createElement('img');
-        evoSpriteItem.src = pokedex[pkmHolder]['icon-sprites'];
-        evoTreeDisplay.append(node['data']);
+        evoSpriteItem.src = pokedex[currentId]['icon-sprites'];
+
+        evoTreeDisplay.append(pkmEvoName);
         evoTreeDisplay.append(' ');
         evoTreeDisplay.appendChild(evoSpriteItem);
         //console.log(evoSpriteItem);
-        console.log(pkName);
+        //console.log(pkmEvoString);
     }); 
     //console.log(typeof evoSpriteItem);
     console.log(evoTree);
@@ -160,7 +172,7 @@ function expandCard(){
 
 }
 
-async function getPokemon(num){
+async function getPokemon(num, namePok){
     let url = "https://pokeapi.co/api/v2/pokemon/" + num.toString();
     let response = await fetch(url)
     let pkm = await response.json();
@@ -210,20 +222,24 @@ async function getPokemon(num){
     function build(){
         let tree = new evoChain();
         let root = pkmEv['chain']['species']['name']; //string
-        console.log(typeof root)
-        //root.sprite = 'this is the root'
-        tree.add(root); //first evo becomes root
+        let rootSprite = pkmEv['chain']['species']['url']
+        let rootData = root + ' ' + rootSprite;
+        tree.add(rootData); //first evo becomes root
 
         let evoChainObj = pkmEv['chain']['evolves_to']; //object 
         evoChainObj.forEach((key, i) => {
             //key : 0, 1, etc
             let item = evoChainObj[i]['species']['name']; 
-            tree.add(item, root); //add second evos to root
+            let itemSprite = evoChainObj[i]['species']['url'];
+            let itemData = item + ' ' + itemSprite;
+            tree.add(itemData, rootData); //add second evos to root
             
             let nextEvoChainObj = evoChainObj[i]['evolves_to']; //iterate this object for next line of evolutions
             nextEvoChainObj.forEach((nextKey, j) =>{
                 let nextItem = nextEvoChainObj[j]['species']['name'];
-                tree.add(nextItem, item);
+                let nextItemSprite = nextEvoChainObj[j]['species']['url'];;
+                let nextItemData = nextItem + ' ' + nextItemSprite;
+                tree.add(nextItemData, itemData);
                 j++;
             });
             i++;
@@ -233,7 +249,7 @@ async function getPokemon(num){
         return tree; //return object
     } //build
     let evoTree = build();
-
+    
     // pokemon object
     pokedex[num] = {
         // in small card view
