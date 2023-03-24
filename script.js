@@ -195,7 +195,7 @@ function expandCard(){
    appendStats();
 }
 
-async function getPokemon(num, namePok){
+async function getPokemon(num){
     let url = "https://pokeapi.co/api/v2/pokemon/" + num.toString();
     let response = await fetch(url)
     let pkm = await response.json();
@@ -227,7 +227,6 @@ async function getPokemon(num, namePok){
     let pkmSpc = await response.json(); //pokemon species 
 
     // from species
-    //console.log(pkmSpc);
     let pkmDesc = pkmSpc['flavor_text_entries'][0]['flavor_text'];
     let pkmTx = pkmSpc.genera[7]['genus'];
     let pkmHap = pkmSpc['base_happiness'];

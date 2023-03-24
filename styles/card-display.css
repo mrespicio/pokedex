@@ -1,5 +1,28 @@
 /* contains the pokemon display and expanded view */
 
+
+*{
+    /* type colors */
+    --normal: #C3C3C3;
+    --fire: #FF9141;
+    --grass: #3DAB3A;
+    --psychic: #F4A4FB;
+    --ghost: #786A9F;
+    --dragon: #8867BD;
+    --poison: #8854DC;
+    --fairy: #FFC0DB;
+    --rock: #AE9267;
+    --dark: #6A6262;
+    --fighting: #CB5050;
+    --water: #4A92FF;
+    --electric: #EACD37;
+    --ice: #8AFFF8;
+    --ground: #835F3E;
+    --flying: #C6E0FF;
+    --bug: #D3DFA1;
+    --steel: #C8C8C8;
+}
+
 /* pokemon regular display */
 #pokemon-display {
     background-color: white;
@@ -8,15 +31,25 @@
     margin: 100px;
 }
 
+/* generic type boxes */
 #type-one,
 #type-two {
-    background-color: #333;
+    /*background-color: #333;*/
     width: 50px;
     color: white;
     padding: 5px 20px;
     /* margin: auto; */
     border-radius: 20px;
 }
+
+#type-one{
+    background-color: var(--grass);
+}
+#type-two{
+    background-color: var(--poison);
+}
+
+
 #pkm-img {
     border: solid 1px red;
 }
