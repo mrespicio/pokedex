@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 25; i++){
+    for(let i = 1; i<= 26; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -137,10 +137,19 @@ function appendEvolutions(){
         let pkmEvoSprite = pkmEvoArr[1]; // raw url, string
         let pkmEvoSpriteArr = pkmEvoSprite.split('/'); //string
         let currentId = Number(pkmEvoSpriteArr[6]); // pokemon id
+        console.log(currentId);
+
+        let evoSpriteItem = document.createElement('img');
 
         // create sprite
-        let evoSpriteItem = document.createElement('img');
-        evoSpriteItem.src = pokedex[currentId]['icon-sprites']; 
+        if (currentId > 151){
+            //console.log('pokemon outside of gen 1');
+            pkmEvoName = '';
+        }
+        else{
+            //console.log('pokemon is within gen 1')
+            evoSpriteItem.src = pokedex[currentId]['icon-sprites'];
+        }
 
         // append name and sprite
         evoTreeDisplay.append(pkmEvoName);
