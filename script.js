@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 133; i<= 136; i++){
+    for(let i = 1; i<= 9; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -57,11 +57,13 @@ function updatePokemon(){
     let typeOne = document.getElementById('type-one'); //element
     typeOne.innerText = (pokedex[this.id]['type-one']).toUpperCase(); //text
     let typeOneColor = getColor(pokedex[this.id]['type-one']); //color code
+
     typeOne.style.backgroundColor = typeOneColor;
 
     let bgColor = getCardColor(typeOneColor, 50);
     let pkDisplay = document.getElementById('pokemon-display');
     pkDisplay.style.backgroundColor = bgColor;
+    console.log(bgColor)
 
     /* secondary type */
     let typeTwo = document.getElementById('type-two');
@@ -138,8 +140,12 @@ function appendEvolutions(){
         let pkmEvoSpriteArr = pkmEvoSprite.split('/'); //string
         let currentId = Number(pkmEvoSpriteArr[6]); // pokemon id
 
-        let evoSpriteItem = document.createElement('img');
+        // if eevee line
+        if(currentId >= 133 && currentId <= 136){
 
+        }
+
+        let evoSpriteItem = document.createElement('img');
         // create sprite
         if (currentId > 151){
             //console.log('pokemon outside of gen 1');

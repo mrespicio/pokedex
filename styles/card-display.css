@@ -24,10 +24,14 @@
 
 /* pokemon regular display */
 #pokemon-display {
-    background-color: white;
+    background-color: #6fdd6c;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     margin: 100px;
+}
+
+#pkm-img{
+    background-color: white;
 }
 
 /* generic type boxes */
@@ -48,25 +52,22 @@
 }
 
 
-#pkm-img {
-    border: solid 1px red;
-}
-
 /* collapsed view */
 .collapsed {
     display: none;
 }
 
 
-/* expanded view */
+
 /* expand button */
 #expand {
     padding: 8px;
     background-color: lightcoral;
 }
 
+/* expanded view */
 .expanded{
-    background-color: lightgreen;
+    /*background-color: lightgreen;*/
     width: 800px;
 }
 
