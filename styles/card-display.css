@@ -34,7 +34,7 @@
 /* generic type boxes */
 #type-one,
 #type-two {
-    /*background-color: #333;*/
+   
     width: 50px;
     color: white;
     padding: 5px 20px;
@@ -43,10 +43,10 @@
 }
 
 #type-one{
-    background-color: --var(grass);
+    background-color: var(--grass);
 }
 #type-two{
-    background-color: --var(poison);
+    background-color: var(--poison);
 }
 
 
