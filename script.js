@@ -87,6 +87,8 @@ function collapseCard(){
     expander.classList.add('collapsed');
     listSize.classList.add('list-default');
     listSize.classList.remove('list-small');
+        //expand button
+        document.getElementById('expand').innerText = `click to expand`;
 }
 
 function clearItem(item){
@@ -162,6 +164,9 @@ function expandCard(){
     expander.classList.add('expanded');
     listSize.classList.remove('list-default')
     listSize.classList.add('list-small');
+
+    //expand button
+    document.getElementById('expand').innerText = `click to collapse`;
 
     // information and description for pokemon
     let info = document.getElementById('pkm-info');
