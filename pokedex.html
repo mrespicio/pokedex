@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="tree.js" defer></script>
     <script type="text/javascript" src="script.js" defer></script>
     <title>Pokedex</title>
 </head>
@@ -25,25 +26,38 @@
 
     <div id="pokemon-display">
         <p id="pkm-title">#1 BULBASAUR</p>
-        <div id="type-one">Grass</div>
-        <div id="type-two">Poison</div>
-        <img id="pkm-img"
-            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
-            alt="image of a green friend">
-
+        <div id="type-one">GRASS</div>
+        <div id="type-two">POISON</div>
+         <img id ="pkm-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="image of a green friend">
+   
         <button id="expand">click to expand</button>
         <!-- show only when clicked on -->
         <div id="expandable" class="collapsed">
             <div id="expanded-left">
-                <div id="pkm-info"></div>
-                <div id="pkm-description"></div>
+                <div id="pkm-info" class="generic-box"></div>
+                <div id="pkm-description" class="generic-box"></div>
             </div>
             <div id="expanded-right">
-                <div class="evo-box"></div>
-                <div class="abilities-box"></div>
-                <div class="catch-box"></div>
-                <div class="hab-box"></div>
-                <div class="stats-box"></div>
+                <div id="evo-box" class="generic-box"></div>
+                <div id="abilities-box" class="generic-box">
+                    <p>Abilities</p>
+                    <div id="regular-abilities"> </div>
+                    <p>Hidden Abilities</p>
+                    <div id="hidden-abilities"></div>
+                </div>
+                <div id="catch-box" class="generic-box"></div>
+                <div id="hab-box" class="generic-box"></div>
+                <div id="stats-box" class="generic-box">
+                    <div id="stat-labels">
+                        <p>hp</p>
+                        <p>atk</p>
+                        <p>def</p>
+                        <p>sp atk</p>
+                        <p>sp def</p>
+                        <p>speed</p>
+                    </div>
+                    <div id="stats-nums"></div>
+                </div>
             </div>
         </div>
     </div>

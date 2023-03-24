@@ -80,8 +80,9 @@ body {
     background-color: lightcoral;
 }
 
-.expanded {
-    background-color: green;
+
+.expanded{
+    background-color: lightgreen;
     width: 800px;
 }
 
@@ -123,11 +124,35 @@ body {
     border-radius: 20px;
 }
 
-
-.info-box {
+/* styles for basic info boxes */
+.generic-box{
     border: solid green 1px;
+    margin: 10px;
 }
 
-.desc-box {
+
+.desc-box{
     border: solid blue 1px;
+}
+
+#abilities-box{
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+}
+
+#stats-box{
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+}
+
+#stat-labels{
+    border: solid red 1px;
+}
+#stats-num{
+    border: solid greenyellow 1px;
+    display: inline-block;
+}
+
+#regular-abilities{
+    border: solid 1px blue;
 }

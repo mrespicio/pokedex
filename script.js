@@ -6,9 +6,12 @@ const pdList = document.getElementById('pd-container'); //append each pokemon he
 const pkmDisplay = document.getElementById('pokemon-display'); 
 let pkmHolder = 1;
 
+let expander = document.getElementById('expandable');
+let listSize = document.getElementById('pokedex-list');
+
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 10; i++){
+    for(let i = 1; i<= 9; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -34,8 +37,12 @@ document.addEventListener('DOMContentLoaded', async () =>{
         pdList.append(pkm);
     }
     // expand card shows detail and should minimize the right sidebar
-    document.getElementById('expand').addEventListener('click', expandCard); 
-    console.log(pokedex);
+    let expandBtn = document.getElementById('expand');
+    let expStatus = document.getElementById('expandable');
+    expandBtn.addEventListener('click', () => {
+        if(expStatus.classList.contains('collapsed')) expandCard();
+        else collapseCard();
+    }); 
 });
 
 // changes pokemon on display when clicked on on the pokedex list
@@ -46,35 +53,118 @@ function updatePokemon(){
     document.getElementById('pkm-title').innerText = "#" +  this.id + " " + (pokedex[this.id].name).toUpperCase();
 
     // update types
-    document.getElementById('type-one').innerText = pokedex[this.id]['type-one'];
+    document.getElementById('type-one').innerText = (pokedex[this.id]['type-one']).toUpperCase();
     if(pokedex[this.id]['type-two'] == 'none') document.getElementById('type-two').innerText = '';
-    else document.getElementById('type-two').innerText = pokedex[this.id]['type-two'];
+    else document.getElementById('type-two').innerText = (pokedex[this.id]['type-two']).toUpperCase();
+
+    // left boxes
+    // info
+    let tax = pokedex[pkmHolder]['taxonomy'];
+    let height = pokedex[pkmHolder]['height'];
+    let weight = pokedex[pkmHolder]['weight'];
+    document.getElementById('pkm-info').innerText = `The ${tax} | ${height} | ${weight}`;
+    // description
+    document.getElementById('pkm-description').innerText = pokedex[pkmHolder]['desc'];
+
+    // right boxes
+    //update evolution chain
+    appendEvolutions();
+
+    // update abilities
+    appendAbilities();
+
+    document.getElementById('catch-box').innerText = `Catch Rate: ${pokedex[pkmHolder]['catch-rate']}`; ;
+    document.getElementById('hab-box').innerText = `Habitat: ${pokedex[pkmHolder]['habitat']}`;
+
+    // update stats
+    appendStats();
 }
 
-// when card expands also make side bar smaller
-function expandCard(){
-    // expand the #expandable id
-    let expander = document.getElementById('expandable');
-    let listSize = document.getElementById('pokedex-list');
-    // expand
-    if(expander.classList.contains('collapsed')){
-        expander.classList.remove('collapsed');
-        expander.classList.add('expanded');
-        listSize.classList.remove('list-default')
-        listSize.classList.add('list-small');
+/* abilities variables */
+function collapseCard(){
+    // collapse the #expandable id, update styles
+    expander.classList.remove('expanded');
+    expander.classList.add('collapsed');
+    listSize.classList.add('list-default');
+    listSize.classList.remove('list-small');
+}
 
-    } 
-    // collapse
-    else{
-        expander.classList.remove('expanded');
-        expander.classList.add('collapsed');
-        listSize.classList.add('list-default');
-        listSize.classList.remove('list-small')
+function clearItem(item){
+    while(item.lastElementChild) {
+        item.removeChild(item.lastElementChild)
     }
+}
+
+function appendEvolutions(){
+    // append evolution chain
+    let evoTreeDisplay = document.getElementById('evo-box');
+    evoTreeDisplay.innerText = ''; //clear chain after ever reclick
+    
+    // traverse evolution tree/ append to display
+    // *to do: if new evolution line, display another branch
+    let evoTree = pokedex[pkmHolder]['evo-tree'];
+    evoTree.traverseBFS((node) => {
+        let pkmEvoString = node['data']; // name and url
+        let pkmEvoArr = pkmEvoString.split(' '); 
+
+        let pkmEvoName = pkmEvoArr[0]; //pokemon name
+
+        let pkmEvoSprite = pkmEvoArr[1]; // raw url, string
+        let pkmEvoSpriteArr = pkmEvoSprite.split('/'); //string
+        let currentId = Number(pkmEvoSpriteArr[6]); // pokemon id
+
+        // create sprite
+        let evoSpriteItem = document.createElement('img');
+        evoSpriteItem.src = pokedex[currentId]['icon-sprites']; 
+
+        // append name and sprite
+        evoTreeDisplay.append(pkmEvoName);
+        evoTreeDisplay.append(' ');
+        evoTreeDisplay.appendChild(evoSpriteItem);
+    });
+}
+
+function appendAbilities(){
+    let regAb = document.getElementById('regular-abilities');
+    let hidAb = document.getElementById('hidden-abilities');
+    let abArray = pokedex[pkmHolder]['abilities'];
+
+    clearItem(regAb);
+    clearItem(hidAb);
+
+    abArray.forEach(ob => {
+        let tempAb = document.createElement('p');
+        tempAb.innerText = ob['ability']['name'];
+        if(ob['is_hidden'] == true) hidAb.appendChild(tempAb);
+        else regAb.appendChild(tempAb);
+    });
+}
+
+function appendStats(){
+    let stats = document.getElementById('stats-nums'); //append to this
+    let statsArr = pokedex[pkmHolder]['stats'];
+    let statHolder = document.createElement('div'); // append each stat to this
+
+    // clear previous status
+    clearItem(stats);
+
+    statsArr.forEach(item => {
+        let temp = document.createElement('p');
+        temp.innerText = item['base_stat'];
+        statHolder.appendChild(temp);
+    });
+    stats.append(statHolder);
+}
+// display information
+function expandCard(){
+    // expand the #expandable id, update styles
+    expander.classList.remove('collapsed');
+    expander.classList.add('expanded');
+    listSize.classList.remove('list-default')
+    listSize.classList.add('list-small');
 
     // information and description for pokemon
     let info = document.getElementById('pkm-info');
-    info.classList.add('info-box');
     let tax = pokedex[pkmHolder]['taxonomy'];
     let height = pokedex[pkmHolder]['height'];
     let weight = pokedex[pkmHolder]['weight'];
@@ -82,20 +172,25 @@ function expandCard(){
 
     // append description
     let description = document.getElementById('pkm-description');
-    description.classList.add('desc-box');
     description.innerText = pokedex[pkmHolder]['desc'];
 
-    // append evolution chain
+    // append evolutions and abilities
+    appendEvolutions();
+    appendAbilities();
 
-    // append abilities
-    
     // append catch rate
+    let catchRate = document.getElementById('catch-box');
+    catchRate.innerText = `Catch Rate: ${pokedex[pkmHolder]['catch-rate']}`; 
 
     //append habitat
-    
+    let habitat = document.getElementById('hab-box');
+    habitat.innerText = `Habitat: ${pokedex[pkmHolder]['habitat']}`;
+
+    // append stats
+   appendStats();
 }
 
-async function getPokemon(num){
+async function getPokemon(num, namePok){
     let url = "https://pokeapi.co/api/v2/pokemon/" + num.toString();
     let response = await fetch(url)
     let pkm = await response.json();
@@ -134,10 +229,45 @@ async function getPokemon(num){
     let pkmCR = pkmSpc['capture_rate'];
     let pkmEgg = pkmSpc['egg_groups'];
     let pkmHatch = pkmSpc['hatch_counter'];
-    let pkmHab = pkmSpc.habitat;
-    let pkmEvo = pkmSpc['evolution_chain'];
-    console.log(pkmEvo);
+    let pkmHab = pkmSpc['habitat']['name'];
 
+
+    // get chain from species
+    response = await fetch(pkmSpc['evolution_chain']['url']);
+    let pkmEv = await response.json();
+
+    // build tree
+    function build(){
+        let tree = new evoChain();
+        let root = pkmEv['chain']['species']['name']; //string
+        let rootSprite = pkmEv['chain']['species']['url']
+        let rootData = root + ' ' + rootSprite;
+        tree.add(rootData); //first evo becomes root
+
+        let evoChainObj = pkmEv['chain']['evolves_to']; //object 
+        evoChainObj.forEach((key, i) => {
+            //key : 0, 1, etc
+            let item = evoChainObj[i]['species']['name']; 
+            let itemSprite = evoChainObj[i]['species']['url'];
+            let itemData = item + ' ' + itemSprite;
+            tree.add(itemData, rootData); //add second evos to root
+            
+            let nextEvoChainObj = evoChainObj[i]['evolves_to']; //iterate this object for next line of evolutions
+            nextEvoChainObj.forEach((nextKey, j) =>{
+                let nextItem = nextEvoChainObj[j]['species']['name'];
+                let nextItemSprite = nextEvoChainObj[j]['species']['url'];;
+                let nextItemData = nextItem + ' ' + nextItemSprite;
+                tree.add(nextItemData, itemData);
+                j++;
+            });
+            i++;
+        })
+        // display tree
+        //tree.traverseBFS((node) => console.log('current node: ', node));
+        return tree; //return object
+    } //build
+    let evoTree = build();
+    
     // pokemon object
     pokedex[num] = {
         // in small card view
@@ -162,10 +292,12 @@ async function getPokemon(num){
         "habitat" : pkmHab,
 
         // info needed for other stuff
-        "evo-chain" : pkmEvo,
         "stats" : pkmStats,
         "moveset" : pkmMoves,
         "evo-sprites" : pkmSprites,
-        "icon-sprites" : pkmIcon
-    }
-}
+        "icon-sprites" : pkmIcon,
+
+        //evolution
+        "evo-tree" : evoTree // tree object
+    } //pkm obj
+} // getpokemon
