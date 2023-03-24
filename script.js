@@ -86,7 +86,7 @@ function getColor(type){
         case 'dragon':
             colorCode = dragon;
             break;
-        case 'posion':
+        case 'poison':
             colorCode = poison;
             break;
         case 'fairy':
@@ -137,28 +137,29 @@ function updatePokemon(){
     document.getElementById('pkm-title').innerText = "#" +  this.id + " " + (pokedex[this.id].name).toUpperCase();
 
     // update types
+    /* primary type */
     let typeOne = document.getElementById('type-one'); //element
-    typeOne.innerText = (pokedex[this.id]['type-one']).toUpperCase();
+    typeOne.innerText = (pokedex[this.id]['type-one']).toUpperCase(); //text
 
-    let typeOneColorText = pokedex[this.id]['type-one']; // type one name
-    console.log(typeOneColorText);
+    let typeOneColor = getColor(pokedex[this.id]['type-one']); //color code
+    //console.log(typeOneColor);
 
-    let typeOneColor = getColor(typeOneColorText)
-    //typeOne.setAttribute('background-color', typeOneColor);
+    typeOne.style.backgroundColor = typeOneColor;
 
+
+    /* secondary type */
     let typeTwo = document.getElementById('type-two');
-
     // no second type
     if(pokedex[this.id]['type-two'] == 'none'){
         typeTwo.innerText = '';
         typeTwo.classList.add('collapsed');
-        
     } 
     else{
         typeTwo.classList.remove('collapsed');
         document.getElementById('type-two').innerText = (pokedex[this.id]['type-two']).toUpperCase();
+        let typeTwoColor = getColor(pokedex[this.id]['type-two']); //color code
+        typeTwo.style.backgroundColor = typeTwoColor;
     } 
-
 
 
 
