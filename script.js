@@ -1,5 +1,25 @@
 const pkmCount = 151;
 
+const normal = '#C3C3C3';
+const fire = '#FF9141';
+const grass = '#3DAB3A';
+const psychic = '#F4A4FB';
+const ghost = '#786A9F';
+const dragon = '#8867BD';
+const poison = '#8854DC';
+const fairy = '#FFC0DB';
+const rock = '#AE9267';
+const dark = '#6A6262';
+const fighting = '#CB5050';
+const water = '#4A92FF';
+const electric = '#EACD37';
+const ice = '#8AFFF8';
+const ground = '#835F3E';
+const flying = '#C6E0FF';
+const bug = '#D3DFA1';
+const steel = '#C8C8C8';
+
+
 let pokedex = {}; //contains each pokemon entry
 const pdList = document.getElementById('pd-container'); //append each pokemon here
 
@@ -45,6 +65,70 @@ document.addEventListener('DOMContentLoaded', async () =>{
     }); 
 });
 
+function getColor(type){
+    let colorCode = '';
+    switch(type){
+        case 'normal':
+            colorCode = normal;
+            break;
+        case 'fire':
+            colorCode = fire;
+            break;
+        case 'grass':
+            colorCode = grass;
+            break;
+        case 'psychic':
+            colorCode = psychic;
+            break;
+        case 'ghost':
+            colorCode = ghost;
+            break;
+        case 'dragon':
+            colorCode = dragon;
+            break;
+        case 'posion':
+            colorCode = poison;
+            break;
+        case 'fairy':
+            colorCode = fairy;
+            break;
+        case 'rock':
+            colorCode = rock;
+            break;
+        case 'dark':
+            colorCode = dark;
+            break;
+        case 'fighting':
+            colorCode = fighting;
+            break;
+        case 'water':
+            colorCode = water;
+            break;
+        case 'electric':
+            colorCode = electric;
+            break;
+        case 'ice':
+            colorCode = ice;
+            break;
+        case 'ground':
+            colorCode = ground;
+            break;
+        case 'flying':
+            colorCode = flying;
+            break;
+        case 'bug':
+            colorCode = bug;
+            break;
+        case 'steel':
+            colorCode = steel;
+            break;
+        default:
+            colorCode = 'normal';
+            break;
+    }
+    return colorCode;
+}
+
 // changes pokemon on display when clicked on on the pokedex list
 function updatePokemon(){
     pkmHolder = this.id;
@@ -53,9 +137,30 @@ function updatePokemon(){
     document.getElementById('pkm-title').innerText = "#" +  this.id + " " + (pokedex[this.id].name).toUpperCase();
 
     // update types
-    document.getElementById('type-one').innerText = (pokedex[this.id]['type-one']).toUpperCase();
-    if(pokedex[this.id]['type-two'] == 'none') document.getElementById('type-two').innerText = '';
-    else document.getElementById('type-two').innerText = (pokedex[this.id]['type-two']).toUpperCase();
+    let typeOne = document.getElementById('type-one'); //element
+    typeOne.innerText = (pokedex[this.id]['type-one']).toUpperCase();
+
+    let typeOneColorText = pokedex[this.id]['type-one']; // type one name
+    console.log(typeOneColorText);
+
+    let typeOneColor = getColor(typeOneColorText)
+    //typeOne.setAttribute('background-color', typeOneColor);
+
+    let typeTwo = document.getElementById('type-two');
+
+    // no second type
+    if(pokedex[this.id]['type-two'] == 'none'){
+        typeTwo.innerText = '';
+        typeTwo.classList.add('collapsed');
+        
+    } 
+    else{
+        typeTwo.classList.remove('collapsed');
+        document.getElementById('type-two').innerText = (pokedex[this.id]['type-two']).toUpperCase();
+    } 
+
+
+
 
     // left boxes
     // info
@@ -97,6 +202,9 @@ function clearItem(item){
     }
 }
 
+function getTypes(){
+    
+}
 function appendEvolutions(){
     // append evolution chain
     let evoTreeDisplay = document.getElementById('evo-box');
