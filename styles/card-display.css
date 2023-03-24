@@ -1,0 +1,104 @@
+/* contains the pokemon display and expanded view */
+
+
+*{
+    /* type colors */
+    --normal: #C3C3C3;
+    --fire: #FF9141;
+    --grass: #3DAB3A;
+    --psychic: #F4A4FB;
+    --ghost: #786A9F;
+    --dragon: #8867BD;
+    --poison: #8854DC;
+    --fairy: #FFC0DB;
+    --rock: #AE9267;
+    --dark: #6A6262;
+    --fighting: #CB5050;
+    --water: #4A92FF;
+    --electric: #EACD37;
+    --ice: #8AFFF8;
+    --ground: #835F3E;
+    --flying: #C6E0FF;
+    --bug: #D3DFA1;
+    --steel: #C8C8C8;
+}
+
+/* pokemon regular display */
+#pokemon-display {
+    background-color: white;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    margin: 100px;
+}
+
+/* generic type boxes */
+#type-one,
+#type-two {
+   
+    width: 50px;
+    color: white;
+    padding: 5px 20px;
+    /* margin: auto; */
+    border-radius: 20px;
+}
+
+#type-one{
+    background-color: var(--grass);
+}
+#type-two{
+    background-color: var(--poison);
+}
+
+
+#pkm-img {
+    border: solid 1px red;
+}
+
+/* collapsed view */
+.collapsed {
+    display: none;
+}
+
+
+/* expanded view */
+#expand {
+    padding: 8px;
+    background-color: lightcoral;
+}
+
+.expanded{
+    background-color: lightgreen;
+    width: 800px;
+}
+
+/* styles for basic info boxes */
+.generic-box{
+    border: solid green 1px;
+    margin: 10px;
+}
+
+.desc-box{
+    border: solid blue 1px;
+}
+
+#abilities-box{
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+}
+
+#stats-box{
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+}
+
+#stat-labels{
+    border: solid red 1px;
+}
+#stats-num{
+    border: solid greenyellow 1px;
+    display: inline-block;
+}
+
+#regular-abilities{
+    border: solid 1px blue;
+}
