@@ -57,14 +57,9 @@ body {
 }
 
 
-
-
 /* regular pokedex */
 #pokedex-list {
     margin: 100px;
-}
-
-.list-default {
     background-color: white;
     border-radius: 12px;
     padding: 40px;
@@ -77,14 +72,32 @@ body {
     padding: 10px;
 }
 
-/* collapsed pokedex list */
-.list-small {
-    background-color: blue;
-}
-
+/* scrollable list of all pokes */
 #pd-container {
     background-color: #EBEFF2;
     padding: 20px;
     border-radius: 20px;
+    height: 400px;
+    overflow-y: auto;
 }
+
+/* 
+list in expanded state
+displays id, sprite, and name
+*/
+.list-default {
+    border: solid 1px red;
+}
+
+
+/* 
+collapsed pokedex list 
+only displays sprite and id < this part is hard idk how to do it
+shift entire list to right side of page
+*/
+.list-small {
+    border: solid 1px blue;
+}
+
+
 

@@ -97,3 +97,22 @@
     display: inline-block;
 }
 
+
+/* evolution chain */
+#evo-box{
+    background-color: lightblue;
+    grid-template-columns: repeat(3, 200px);
+}
+
+#evo-one{
+    border: solid 1px green;
+}
+
+#evo-two{
+    border: solid 1px orangered;
+}
+
+#evo-three{
+    border: solid 1px darkcyan;
+
+}

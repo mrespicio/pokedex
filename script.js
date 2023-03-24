@@ -11,14 +11,14 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 26; i++){
+    for(let i = 133; i<= 136; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
 
         //create sprites
-        let pkmIm = document.createElement('img');
-        pkmIm.src = pokedex[i]['icon-sprites']; 
+        let pkmSprite = document.createElement('img');
+        pkmSprite.src = pokedex[i]['icon-sprites']; 
   
         // display types
         let type1 = document.createElement('div');
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
         pkm.addEventListener('click', updatePokemon); 
 
         // append sprites to div w/ pokemon name on pokedex
-        pkm.prepend(pkmIm);
+        pkm.prepend(pkmSprite);
         pdList.append(pkm);
     }
     // expand card shows detail and should minimize the right sidebar
@@ -244,7 +244,7 @@ async function getPokemon(num){
     }
 
     // from regular pokemon info
-    let pkmImg = pkm.sprites.other['official-artwork']['front_default']; //return img
+    let pkmSpriteg = pkm.sprites.other['official-artwork']['front_default']; //return img
     let pkmHeight = pkm.height;
     let pkmWeight = pkm.weight;
     let pkmAb = pkm.abilities; //return array
@@ -306,7 +306,7 @@ async function getPokemon(num){
     pokedex[num] = {
         // in small card view
         "name" : pkmName, 
-        "img" : pkmImg, 
+        "img" : pkmSpriteg, 
         "type-one" : pkmTypeA,
         "type-two" : pkmTypeB,
 
