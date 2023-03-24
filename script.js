@@ -59,6 +59,10 @@ function updatePokemon(){
     let typeOneColor = getColor(pokedex[this.id]['type-one']); //color code
     typeOne.style.backgroundColor = typeOneColor;
 
+    let bgColor = getCardColor(typeOneColor, 50);
+    let pkDisplay = document.getElementById('pokemon-display');
+    pkDisplay.style.backgroundColor = bgColor;
+
     /* secondary type */
     let typeTwo = document.getElementById('type-two');
     // no second type

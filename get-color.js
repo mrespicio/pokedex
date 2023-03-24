@@ -1,4 +1,5 @@
 
+/* type colors */
 const normal = '#C3C3C3';
 const fire = '#FF9141';
 const grass = '#3DAB3A';
@@ -17,6 +18,27 @@ const ground = '#835F3E';
 const flying = '#C6E0FF';
 const bug = '#D3DFA1';
 const steel = '#C8C8C8';
+
+/* card background colors */
+/* code snippet from natClark */
+function getCardColor(colorCode, magnitude){
+    colorCode = colorCode.replace(`#`, ``);
+    if (colorCode.length === 6) {
+        const decimalColor = parseInt(colorCode, 16);
+        let r = (decimalColor >> 16) + magnitude;
+        r > 255 && (r = 255);
+        r < 0 && (r = 0);
+        let g = (decimalColor & 0x0000ff) + magnitude;
+        g > 255 && (g = 255);
+        g < 0 && (g = 0);
+        let b = ((decimalColor >> 8) & 0x00ff) + magnitude;
+        b > 255 && (b = 255);
+        b < 0 && (b = 0);
+        return `#${(g | (b << 8) | (r << 16)).toString(16)}`;
+    } else {
+        return colorCode;
+    }
+}
 
 function getColor(type){
     let colorCode = '';
@@ -81,3 +103,5 @@ function getColor(type){
     }
     return colorCode;
 }
+
+
