@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 50; i++){
+    for(let i = 1; i<= 25; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
@@ -230,7 +230,6 @@ async function getPokemon(num, namePok){
     let pkmEgg = pkmSpc['egg_groups'];
     let pkmHatch = pkmSpc['hatch_counter'];
     let pkmHab = pkmSpc['habitat']['name'];
-
 
     // get chain from species
     response = await fetch(pkmSpc['evolution_chain']['url']);
