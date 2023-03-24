@@ -137,7 +137,6 @@ function appendEvolutions(){
         let pkmEvoSprite = pkmEvoArr[1]; // raw url, string
         let pkmEvoSpriteArr = pkmEvoSprite.split('/'); //string
         let currentId = Number(pkmEvoSpriteArr[6]); // pokemon id
-        console.log(currentId);
 
         let evoSpriteItem = document.createElement('img');
 

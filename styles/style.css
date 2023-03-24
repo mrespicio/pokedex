@@ -58,43 +58,6 @@ body {
 
 
 
-/* pokemon display */
-#pokemon-display {
-    background-color: white;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    margin: 100px;
-}
-
-#type-one,
-#type-two {
-    background-color: #333;
-    width: 50px;
-    color: white;
-    padding: 5px 20px;
-    /* margin: auto; */
-    border-radius: 20px;
-}
-
-#expand {
-    padding: 8px;
-    background-color: lightcoral;
-}
-
-
-.expanded{
-    background-color: lightgreen;
-    width: 800px;
-}
-
-/* hide details */
-.collapsed {
-    display: none;
-}
-
-#pkm-img {
-    border: solid 1px red;
-}
 
 /* regular pokedex */
 #pokedex-list {
@@ -125,35 +88,3 @@ body {
     border-radius: 20px;
 }
 
-/* styles for basic info boxes */
-.generic-box{
-    border: solid green 1px;
-    margin: 10px;
-}
-
-
-.desc-box{
-    border: solid blue 1px;
-}
-
-#abilities-box{
-    display: grid;
-    grid-template-columns: repeat(2, 200px);
-}
-
-#stats-box{
-    display: grid;
-    grid-template-columns: repeat(2, 200px);
-}
-
-#stat-labels{
-    border: solid red 1px;
-}
-#stats-num{
-    border: solid greenyellow 1px;
-    display: inline-block;
-}
-
-#regular-abilities{
-    border: solid 1px blue;
-}
