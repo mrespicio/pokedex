@@ -1,6 +1,5 @@
 /* contains the pokemon display and expanded view */
 
-
 *{
     /* type colors */
     --normal: #C3C3C3;
@@ -34,8 +33,7 @@
 /* generic type boxes */
 #type-one,
 #type-two {
-   
-    width: 50px;
+    width: 4rem;
     color: white;
     padding: 5px 20px;
     /* margin: auto; */
@@ -61,6 +59,7 @@
 
 
 /* expanded view */
+/* expand button */
 #expand {
     padding: 8px;
     background-color: lightcoral;
@@ -73,19 +72,18 @@
 
 /* styles for basic info boxes */
 .generic-box{
+    background-color: white;
     border: solid green 1px;
     margin: 10px;
 }
 
-.desc-box{
-    border: solid blue 1px;
-}
-
+/* grid to display abilities */
 #abilities-box{
     display: grid;
     grid-template-columns: repeat(2, 200px);
 }
 
+/* stats */
 #stats-box{
     display: grid;
     grid-template-columns: repeat(2, 200px);
@@ -99,6 +97,3 @@
     display: inline-block;
 }
 
-#regular-abilities{
-    border: solid 1px blue;
-}
