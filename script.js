@@ -11,7 +11,7 @@ let listSize = document.getElementById('pokedex-list');
 
 // populate pokedex list
 document.addEventListener('DOMContentLoaded', async () =>{
-    for(let i = 1; i<= 9; i++){
+    for(let i = 1; i<= 50; i++){
         await getPokemon(i);
         let pkm = document.createElement('div');
         pkm.id = i; 
