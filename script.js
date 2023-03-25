@@ -45,6 +45,13 @@ document.addEventListener('DOMContentLoaded', async () =>{
     }); 
 });
 
+function searchBar(){
+    let input = document.getElementById('search').ariaValueMax;
+    input = input.toLowerCase();
+    let pokList = pdList; 
+     
+}
+
 // changes pokemon on display when clicked on on the pokedex list
 function updatePokemon(){
     pkmHolder = this.id;

@@ -58,7 +58,6 @@
 }
 
 
-
 /* expand button */
 #expand {
     padding: 8px;
@@ -105,15 +104,3 @@
     grid-template-columns: repeat(3, 200px);
 }
 
-#evo-one{
-    border: solid 1px green;
-}
-
-#evo-two{
-    border: solid 1px orangered;
-}
-
-#evo-three{
-    border: solid 1px darkcyan;
-
-}
