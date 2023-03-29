@@ -1,5 +1,22 @@
-const pkmCount = 151;
 
+function tabFunctions(){
+    const tabs = document.querySelectorAll(['data-tab-targeter']) /* all tabs */
+    //const tabContents = document.querySelectorAll(['data-tab-content']) /*all tab contents */
+    console.log(tabs);
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () =>{
+            //const target = document.querySelector(tab.dataset.tabTarget)
+            /*tabContents.forEach(tabContent =>{
+                tabContent.classList.remove('active');
+            })*/
+            //target.classList.add('active');
+            console.log('you have clicked on a tab')
+        })
+    })
+}
+
+const pkmCount = 151;
 let pokedex = {}; //contains each pokemon entry
 const pdList = document.getElementById('pd-container'); //append each pokemon here
 
@@ -237,6 +254,8 @@ function expandCard(){
 
     // append stats
    appendStats();
+
+   tabFunctions();
 }
 
 async function getPokemon(num){

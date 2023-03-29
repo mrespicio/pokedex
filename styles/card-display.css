@@ -51,12 +51,10 @@
     background-color: var(--poison);
 }
 
-
 /* collapsed view */
 .collapsed {
     display: none;
 }
-
 
 /* expand button */
 #expand {
@@ -68,6 +66,16 @@
 .expanded{
     /*background-color: lightgreen;*/
     width: 800px;
+}
+
+/* hide unopened tab */
+[data-tab-content]{
+    display: none;
+}
+
+/* display active tab */
+.active[data-tab-content]{
+    display: block;
 }
 
 /* styles for basic info boxes */
