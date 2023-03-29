@@ -34,37 +34,45 @@
         <div id="type-two">POISON</div>
          <img id ="pkm-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="image of a green friend">
    
-
         <!-- show only when clicked on -->
         <div id="expandable" class="collapsed">
+
+            <ul>
+                <li data-tab-targetor="#general">General</li>
+                <li data-tab-targetor="#moveset">Moveset</li>
+            </ul> 
+
             <div id="expanded-left">
                 <div id="pkm-info" class="generic-box"></div>
                 <div id="pkm-description" class="generic-box"></div>
             </div>
             <div id="expanded-right">
-                <div id="evo-box" class="generic-box">
-                    <div id="evo-one"></div>
-                    <div id="evo-two"></div>
-                    <div id="evo-three"></div>
-                </div>
-                <div id="abilities-box" class="generic-box">
-                    <p>Abilities</p>
-                    <div id="regular-abilities"> </div>
-                    <p>Hidden Abilities</p>
-                    <div id="hidden-abilities"></div>
-                </div>
-                <div id="catch-box" class="generic-box"></div>
-                <div id="hab-box" class="generic-box"></div>
-                <div id="stats-box" class="generic-box">
-                    <div id="stat-labels">
-                        <p>hp</p>
-                        <p>atk</p>
-                        <p>def</p>
-                        <p>sp atk</p>
-                        <p>sp def</p>
-                        <p>speed</p>
+                <!-- general tab -->
+                <div id="general" data-tab-content class="active">
+                    <div id="evo-box" class="generic-box"></div>
+                    <div id="abilities-box" class="generic-box">
+                        <p>Abilities</p>
+                        <div id="regular-abilities"> </div>
+                        <p>Hidden Abilities</p>
+                        <div id="hidden-abilities"></div>
                     </div>
-                    <div id="stats-nums"></div>
+                    <div id="catch-box" class="generic-box"></div>
+                    <div id="hab-box" class="generic-box"></div>
+                    <div id="stats-box" class="generic-box">
+                        <div id="stat-labels">
+                            <p>hp</p>
+                            <p>atk</p>
+                            <p>def</p>
+                            <p>sp atk</p>
+                            <p>sp def</p>
+                            <p>speed</p>
+                        </div>
+                        <div id="stats-nums"></div>
+                    </div>
+                </div>
+                <!-- moveset tab -->
+                <div id="moveset" data-tab-content>
+                    <p>this is the moveset</p>
                 </div>
             </div>
         </div>
@@ -73,7 +81,7 @@
 
     <div id="pokedex-list" class="list-default">
         <h2>Search 151 Pokemon</h2>
-        <div id="search">search bar here</div>
+        <input id="search" type="text" name="search" value="search"></input>
         <div id="pd-container">
             <!-- list of pokes here -->
         </div>
