@@ -39,8 +39,6 @@
 /* generic type boxes */
 #pkm-typing {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
 }
 
 #type-one,
@@ -48,7 +46,7 @@
     width: 4rem;
     color: white;
     padding: 5px 20px;
-    /* margin: auto; */
+    margin: auto;
     border-radius: 20px;
 }
 
@@ -60,6 +58,11 @@
     background-color: var(--poison);
 }
 
+#pkm-card-heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
 /* collapsed view */
 .collapsed {
@@ -153,7 +156,7 @@
     border: solid red 1px;
     /* height: 30px; */
     /* padding: 10px; */
-    border-radius: 12px;
+    /* border-radius: 12px; */
     /* background-color: red; */
 }
 
@@ -165,7 +168,6 @@
 
 /* evolution chain */
 #evo-box {
-    background-color: lightblue;
     grid-template-columns: repeat(3, 200px);
     height: 150px;
     align-items: center;
