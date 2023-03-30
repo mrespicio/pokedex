@@ -1,6 +1,6 @@
 /* contains the pokemon display and expanded view */
 
-*{
+* {
     /* type colors */
     --normal: #C3C3C3;
     --fire: #FF9141;
@@ -28,10 +28,23 @@
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     margin: 100px;
+    padding: 40px;
 }
 
-#pkm-img{
+#pkm-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#pkm-type {
+    display: flex;
+    align-items: center;
+}
+
+#pkm-img {
     background-color: white;
+    border-radius: 20px;
 }
 
 /* generic type boxes */
@@ -44,10 +57,11 @@
     border-radius: 20px;
 }
 
-#type-one{
+#type-one {
     background-color: var(--grass);
 }
-#type-two{
+
+#type-two {
     background-color: var(--poison);
 }
 
@@ -63,52 +77,108 @@
 }
 
 /* expanded view */
-.expanded{
-    /*background-color: lightgreen;*/
-    width: 800px;
+.expanded {
+    /* background-color: lightgreen; */
+    width: 1000px;
+    /* display: grid;
+    grid-template-columns: repeat(2, 490px);
+    grid-gap: 20px; */
+}
+
+/* expanded info for general tab */
+#adv-info {
+    display: grid;
+    grid-template-columns: repeat(2, 490px);
+    grid-gap: 20px;
+}
+
+#pkm-info {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#pkm-description {
+    padding: 20px;
+    padding-left: 40px;
+}
+
+#ability-catch-habitat {
+    display: grid;
+    grid-template-columns: repeat(2, 250px);
+    /* grid-gap: 20px; */
+}
+
+#catch-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+#catch-box,
+#hab-box {
+    padding-left: 20px;
+    height: 40px;
+    width: 190px;
+    display: flex;
+    align-items: center;
 }
 
 /* hide unopened tab */
-[data-tab-content]{
+[data-tab-content] {
     display: none;
 }
 
 /* display active tab */
-.active[data-tab-content]{
+.active[data-tab-content] {
     display: block;
 }
 
 /* styles for basic info boxes */
-.generic-box{
+.generic-box {
     background-color: white;
     border: solid green 1px;
     margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 /* grid to display abilities */
-#abilities-box{
+#abilities-box {
     display: grid;
     grid-template-columns: repeat(2, 200px);
+    text-align: left;
+    padding-left: 20px;
+    width: 200px;
+    z-index: 1;
 }
 
 /* stats */
-#stats-box{
+#stats-box {
     display: grid;
     grid-template-columns: repeat(2, 200px);
+    padding-left: 20px;
+    text-align: left;
 }
 
-#stat-labels{
+#stat-labels {
     border: solid red 1px;
+    border-radius: 12px;
 }
-#stats-num{
+
+#stats-num {
     border: solid greenyellow 1px;
     display: inline-block;
 }
 
 
 /* evolution chain */
-#evo-box{
+#evo-box {
     background-color: lightblue;
     grid-template-columns: repeat(3, 200px);
+    height: 100px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
-
