@@ -53,7 +53,7 @@ body {
 }
 
 #nav-right a:hover {
-    font-weight: 700;
+    color: black;
 }
 
 
@@ -98,6 +98,3 @@ shift entire list to right side of page
 .list-small {
     border: solid 1px blue;
 }
-
-
-
